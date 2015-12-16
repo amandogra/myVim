@@ -1,4 +1,5 @@
 """""""""" Plugins """"""""""
+filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -11,8 +12,14 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 " NERD tree
 Plugin 'scrooloose/nerdtree'
+" NERD commenter
+Plugin 'scrooloose/nerdcommenter'
 " airline bar - Lean & mean status/tabline for vim that's light as air.
-Plugin 'bling/vim-airline'
+"Plugin 'bling/vim-airline'
+"A light and configurable statusline/tabline for Vim. vim-airline is a nice plugin, but it uses too much functions of other plugins, which should be done by users in .vimrc
+Plugin 'itchyny/lightline.vim'
+" Search across files using the silver searcher (Ag) plugin
+Plugin 'gabesoft/vim-ags'
 " fugitive - git awesomeness in vim
 Plugin 'tpope/vim-fugitive'
 " Powerline fonts
@@ -34,6 +41,16 @@ Plugin 'gioele/vim-autoswap'
 Plugin 'airblade/vim-gitgutter'
 "If you've ever tried using the . command after a plugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole. That disappointment ends today. Repeat.vim remaps . in a way that plugins can tap into it.
 Plugin 'tpope/vim-repeat'
+"At every search command, it automatically prints> "At match #N out of M matches"
+Plugin 'henrik/vim-indexed-search'
+"with % key match the HTML etc tags words too
+Plugin 'matchit.zip'
+"Danial Conway's highlight next while searching 
+"Plugin 'BriceSD/hlnext'
+"Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
+"Plugin 'fisadev/dragvisuals.vim'
+"Automatically add the pairing character for [,(,{ ", and '
+Plugin 'AutoClose'
 
 
 " All of your Plugins must be added before the following line
@@ -69,8 +86,10 @@ endif
 
 "related to Git Gutter
 let g:gitgutter_sign_column_always = 1
-nmap <Leader>j <Plug>GitGutterNextHunk "Go to the next git change
-nmap <Leader>k <Plug>GitGutterPrevHunk "Go to the previous git change
+"Go to the next git change
+nmap <Leader>j <Plug>GitGutterNextHunk
+"Go to the previous git change
+nmap <Leader>k <Plug>GitGutterPrevHunk
 let g:gitgutter_realtime = 1 "So the signs are real time
 let g:gitgutter_eager = 1 "To notice change to git index
 
@@ -93,22 +112,42 @@ if &term == 'xterm' || &term == 'screen'
     set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 endif
 
+
+"settings related to nerdtree
+let NERDTreeChDirMode=0         "Enable the change directory mode
+
 "settings related to airline status bar
-let g:airline_theme='tomorrow'
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+"let g:airline_theme='tomorrow'
+"let g:airline_powerline_fonts=1
+"let g:airline#extensions#tabline#enabled = 0
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
 "enable/disable displaying tab number in tabs mode. >
-let g:airline#extensions#tabline#show_tab_nr = 0
-let g:airline#extensions#tabline#buffer_idx_mode = 0
+"let g:airline#extensions#tabline#show_tab_nr = 0
+"let g:airline#extensions#tabline#buffer_idx_mode = 0
+
+"related to lightline (status line)
+set laststatus=2
+let g:lightline = {
+\ 'colorscheme': 'solarized',
+\}
+
 "related to fugitive
 set statusline+=%{fugitive#statusline()} " Git Hotness
+"To fix the highlighting in the Ag search window
+autocmd BufWinEnter {*.agsv} syntax on
 
 
+"DragVisuals related settings
+"vmap  <expr> <LEFT>   DVB_Drag('left')
+"vmap  <expr>  <RIGHT>  DVB_Drag('right')
+"vmap  <expr>  <DOWN>   DVB_Drag('down')
+"vmap  <expr>  <UP>     DVB_Drag('up')
+"vmap  <expr>  D        DVB_Duplicate()
 
 
 """""""""" General settings """"""""""
+set shell=/bin/bash
 set nocompatible "We don't need compatibility with Vi. I like ViMproved :)
 "Search related settings
 set incsearch "Incremental search, while searching highlight the search results as the keys are pressed
@@ -117,6 +156,7 @@ set smartcase "While searching, if the pattern includes capital letters then the
 set hlsearch "Highlight the search results
 
 filetype plugin indent on   " Automatically detect file types.
+syntax on
 "set mouse=a                " Automatically enable mouse usage
 set mousehide               " Hide the mouse cursor while typing
 set virtualedit=onemore     " Allow for cursor beyond last character
@@ -136,7 +176,12 @@ set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+set colorcolumn=81
 
+"Use system clipboard as a default register
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
 
 "Setting the file name in the Title Bar
 let &titlestring = expand("%:p")
@@ -183,7 +228,7 @@ function! Preserve(command)
   let @/=_s
   call cursor(l, c)
 endfunction
-noremap <Leader>_ :call Preserve("%s/\\s\\+$//e")<CR>
+noremap <Leader>- :call Preserve("%s/\\s\\+$//e")<CR>
 
 if has('cmdline_info')
     set ruler                   " Show the ruler
@@ -207,7 +252,7 @@ endif
 
 """""""""" Key mapping """"""""""
 let mapleader = ',' "remapping the Leader key from \ to ,
-imap ;; <Esc>	"remaping the esc key
+imap ;; <Esc>   "remaping the esc key
 
 :nmap j gj
 :nmap k gk
@@ -218,6 +263,7 @@ imap ;; <Esc>	"remaping the esc key
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>
+map <Leader>= <C-w>=
 
 " Easier horizontal scrolling
 map zl zL
@@ -232,8 +278,14 @@ cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
 "Plugin related key mapping
-"Open NERDTree with ,e
-:nmap <Leader>e :NERDTree<CR>
+"Open NERDTree with ,e. This will sync the NERDtree with the current buffer
+:nmap <Leader>e :NERDTreeFind<CR>
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" bind backslash to Ag Silver-searcher
+let g:ackprg = 'ag --nogroup --nocolor --column'
+nnoremap \ :Ags<SPACE>
 
 "this one is for the repeat plugin to work
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
