@@ -8,6 +8,9 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" Interpret a file by function and cache file automatically (Required by
+" vimsnipMate plugin
+Plugin 'MarcWeber/vim-addon-mw-utils'
 " Solarized color scheme
 Plugin 'altercation/vim-colors-solarized'
 " NERD tree
@@ -50,8 +53,17 @@ Plugin 'matchit.zip'
 "Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
 "Plugin 'fisadev/dragvisuals.vim'
 "Automatically add the pairing character for [,(,{ ", and '
-Plugin 'AutoClose'
-
+Plugin 'Townk/vim-autoclose'
+"Snipmate for snippets
+Plugin 'garbas/vim-snipmate'
+"More snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'Shougo/neocomplete'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'honza/vim-snippets'
+"Jasmine test framework related snippets
+Plugin 'thomd/vim-jasmine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -144,6 +156,18 @@ autocmd BufWinEnter {*.agsv} syntax on
 "vmap  <expr>  <DOWN>   DVB_Drag('down')
 "vmap  <expr>  <UP>     DVB_Drag('up')
 "vmap  <expr>  D        DVB_Duplicate()
+
+"Related to UltiSnipp
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+
 
 
 """""""""" General settings """"""""""
@@ -289,3 +313,6 @@ nnoremap \ :Ags<SPACE>
 
 "this one is for the repeat plugin to work
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+"When double braces are typed in the insert mode do not do anything else
+inoremap \{{ {{ 
