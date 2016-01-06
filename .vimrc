@@ -1,6 +1,7 @@
 """""""""" Plugins """"""""""
 filetype off
 " set the runtime path to include Vundle and initialize
+set rtp+=~/.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -13,6 +14,8 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 " Solarized color scheme
 Plugin 'altercation/vim-colors-solarized'
+" Gruvbox colors scheme
+Plugin 'morhetz/gruvbox'
 " NERD tree
 Plugin 'scrooloose/nerdtree'
 " NERD commenter
@@ -57,6 +60,7 @@ Plugin 'Townk/vim-autoclose'
 "Snipmate for snippets
 Plugin 'garbas/vim-snipmate'
 "More snippets
+Plugin 'tomtom/tlib_vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'Shougo/neocomplete'
 Plugin 'Shougo/neosnippet'
@@ -71,6 +75,9 @@ call vundle#end()            " required
 
 
 """""""""" Plugin Related modifications """"""""""
+"diff should be split vertically
+set diffopt+=vertical
+
 "related to Tabular plugin as suggested in http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
 if exists(":Tabularize")
     nmap <Leader>a= :Tabularize /=<CR>
@@ -108,14 +115,14 @@ let g:gitgutter_eager = 1 "To notice change to git index
 "settings related to solarized color scheme
 let g:solarized_termcolors=256
 let g:solarized_bold=0
-syntax enable                 " Syntax highlighting
 if has('gui_running')
     set background=dark         " Assume a dark background
     "color solarized   "Solarized color scheme
     color Tomorrow-Night-Eighties
 else
-    set background=light
-    color default
+    set background=dark
+    "color default
+    colorscheme gruvbox
 endif
 
 "set powerline fonts
@@ -171,6 +178,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 """""""""" General settings """"""""""
+"let $VIMRUNTIME = "/Users/amandogra/.vim"
 set shell=/bin/bash
 set nocompatible "We don't need compatibility with Vi. I like ViMproved :)
 "Search related settings
@@ -181,12 +189,13 @@ set hlsearch "Highlight the search results
 
 filetype plugin indent on   " Automatically detect file types.
 syntax on
-"set mouse=a                " Automatically enable mouse usage
+set mouse=a                " Automatically enable mouse usage
 set mousehide               " Hide the mouse cursor while typing
 set virtualedit=onemore     " Allow for cursor beyond last character
 set paste                   " Same indentation while pasting
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set history=1000            " Store a ton of history (default is 20)
+set spell                           " Spell checking on
 set hidden                  " Allow buffer switching without saving
 set iskeyword-=.            " '.' is an end of word designator
 set iskeyword-=-            " '-' is an end of word designator
@@ -220,25 +229,6 @@ endif
 
 
 """"""""""" Formatting """"""""""""""
-set rnu	                        "Show relative line numbers
-set showmatch                   " Show matching brackets/parenthesis
-set nowrap                      " Do not wrap long lines
-set autoindent                  " Indent at the same level of the previous line
-set shiftwidth=4                " Use indents of 4 spaces
-set expandtab                   " Tabs are spaces, not tabs
-set tabstop=4                   " An indentation every four columns
-set softtabstop=4               " Let backspace delete indent
-set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
-set splitright                  " Puts new vsplit windows to the right of the current
-set splitbelow                  " Puts new split windows to the bottom of the current
-set matchpairs+=<:>             " Match, to be used with %
-set tabpagemax=15               " Only show 15 tabs
-set showmode                    " Display the current mode
-set cursorline                  " Highlight current line
-set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-highlight clear SignColumn      " SignColumn should match background
-highlight clear LineNr          " Current line number row will have same background color in relative mode
-
 "Following function assists in cleaning the trailing spaces manually by using Leader_ key mapping
 "Function to preserve the state of the cursor
 function! Preserve(command)
@@ -272,6 +262,25 @@ if has('statusline')
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
+set rnu                         "Show relative line numbers
+set number                      "Show the current line number
+set showmatch                   " Show matching brackets/parenthesis
+set nowrap                      " Do not wrap long lines
+set autoindent                  " Indent at the same level of the previous line
+set shiftwidth=4                " Use indents of 4 spaces
+set tabstop=4                   " An indentation every four columns
+set softtabstop=4               " Let backspace delete indent
+set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+set splitright                  " Puts new vsplit windows to the right of the current
+set splitbelow                  " Puts new split windows to the bottom of the current
+set matchpairs+=<:>             " Match, to be used with %
+set tabpagemax=15               " Only show 15 tabs
+set showmode                    " Display the current mode
+set cursorline                  " Highlight current line
+set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+highlight clear SignColumn      " SignColumn should match background
+highlight clear LineNr          " Current line number row will have same background color in relative mode
+set expandtab                   " Tabs are spaces, not tabs
 
 
 """""""""" Key mapping """"""""""
@@ -287,6 +296,7 @@ imap ;; <Esc>   "remaping the esc key
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>
+map <Leader>m <C-w>h
 map <Leader>= <C-w>=
 
 " Easier horizontal scrolling
@@ -315,4 +325,8 @@ nnoremap \ :Ags<SPACE>
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 "When double braces are typed in the insert mode do not do anything else
-inoremap \{{ {{ 
+inoremap \{{ {{
+
+" Map <Leader>ff to display all lines with keyword under cursor
+" and ask which one to jump to
+nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
