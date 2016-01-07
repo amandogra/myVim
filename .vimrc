@@ -55,20 +55,12 @@ Plugin 'matchit.zip'
 "Plugin 'BriceSD/hlnext'
 "Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
 "Plugin 'fisadev/dragvisuals.vim'
-"Automatically add the pairing character for [,(,{ ", and '
-Plugin 'Townk/vim-autoclose'
-"Snipmate for snippets
-Plugin 'garbas/vim-snipmate'
-"More snippets
-Plugin 'tomtom/tlib_vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'Shougo/neocomplete'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'honza/vim-snippets'
-"Jasmine test framework related snippets
-Plugin 'thomd/vim-jasmine'
-
+"Vim plugin, insert or delete brackets, parenthesis,  quotes in pair
+Plugin 'jiangmiao/auto-pairs'
+"HTML5 omnicomplete and syntax
+Plugin 'othree/html5.vim'
+"JS Docs plugin to generate JSDoc block comments based on a function signature
+Plugin 'heavenshell/vim-jsdoc'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -164,18 +156,6 @@ autocmd BufWinEnter {*.agsv} syntax on
 "vmap  <expr>  <UP>     DVB_Drag('up')
 "vmap  <expr>  D        DVB_Duplicate()
 
-"Related to UltiSnipp
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-
-
-
 
 """""""""" General settings """"""""""
 "let $VIMRUNTIME = "/Users/amandogra/.vim"
@@ -226,6 +206,10 @@ if &term == "screen" || &term == "xterm"
     set title
 endif
 
+"Cursor shapes in different modes NOTE: These work with iTerm Only.
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 
 """"""""""" Formatting """"""""""""""
@@ -325,7 +309,7 @@ nnoremap \ :Ags<SPACE>
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 "When double braces are typed in the insert mode do not do anything else
-inoremap \{{ {{
+"inoremap \{{ {{
 
 " Map <Leader>ff to display all lines with keyword under cursor
 " and ask which one to jump to
