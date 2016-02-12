@@ -40,7 +40,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'easymotion/vim-easymotion'
 "Tabular - align multiple lines based on = or : or any other character or
 "space
-Plugin 'godlygeek/tabular'
+"Plugin 'godlygeek/tabular'
 "Please Vim, stop with these swap file messages. Just switch to the correct window!
 Plugin 'gioele/vim-autoswap'
 "Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
@@ -51,6 +51,10 @@ Plugin 'tpope/vim-repeat'
 Plugin 'henrik/vim-indexed-search'
 "with % key match the HTML etc tags words too
 Plugin 'matchit.zip'
+"A code-completion engine for vim
+Plugin 'Valloric/YouCompleteMe'
+"Using tab key for omnicomplete
+Plugin 'ervandew/supertab'
 "Danial Conway's highlight next while searching 
 "Plugin 'BriceSD/hlnext'
 "Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
@@ -59,8 +63,20 @@ Plugin 'matchit.zip'
 Plugin 'jiangmiao/auto-pairs'
 "HTML5 omnicomplete and syntax
 Plugin 'othree/html5.vim'
+"Improved Javascript indentaion and syntax support
+Plugin 'pangloss/vim-javascript'
 "JS Docs plugin to generate JSDoc block comments based on a function signature
 Plugin 'heavenshell/vim-jsdoc'
+"Plugin for visually displaying indent levels in code
+Plugin 'nathanaelkane/vim-indent-guides'
+"Plugin for TypeScript
+Plugin 'leafgarland/typescript-vim'
+"Interactive command execution in vim. Required by tsuquyomi
+Plugin 'Shougo/vimproc.vim'
+"Plugin for autocompletion of typescript
+Plugin 'Quramy/tsuquyomi'
+" Plutin for managing a Wordpress blog from vim
+Plugin 'danielmiessler/VimBlog'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -71,29 +87,29 @@ call vundle#end()            " required
 set diffopt+=vertical
 
 "related to Tabular plugin as suggested in http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-if exists(":Tabularize")
-    nmap <Leader>a= :Tabularize /=<CR>
-    vmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a: :Tabularize /:\zs<CR>
-    vmap <Leader>a: :Tabularize /:\zs<CR>
-    nmap <Leader>a=> :Tabularize /=><CR>
-    vmap <Leader>a=> :Tabularize /=><CR>
-    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    "it will call the :Tabularize command each time you insert a | character. This is helpful while creating tables in a readme file.
-    inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+"if exists(":Tabularize")
+    "nmap <Leader>a= :Tabularize /=<CR>
+    "vmap <Leader>a= :Tabularize /=<CR>
+    "nmap <Leader>a: :Tabularize /:\zs<CR>
+    "vmap <Leader>a: :Tabularize /:\zs<CR>
+    "nmap <Leader>a=> :Tabularize /=><CR>
+    "vmap <Leader>a=> :Tabularize /=><CR>
+    "nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    "vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    ""it will call the :Tabularize command each time you insert a | character. This is helpful while creating tables in a readme file.
+    "inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
-    function! s:align()
-        let p = '^\s*|\s.*\s|\s*$'
-        if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-            let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-            let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-            Tabularize/|/l1
-            normal! 0
-            call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-        endif
-    endfunction
-endif
+    "function! s:align()
+        "let p = '^\s*|\s.*\s|\s*$'
+        "if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+            "let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+            "let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+            "Tabularize/|/l1
+            "normal! 0
+            "call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+        "endif
+    "endfunction
+"endif
 
 "related to Git Gutter
 let g:gitgutter_sign_column_always = 1
@@ -126,6 +142,7 @@ endif
 
 "settings related to nerdtree
 let NERDTreeChDirMode=0         "Enable the change directory mode
+let NERDTreeQuitOnOpen=1        "Close the NERDtree as soon a file is opened
 
 "settings related to airline status bar
 "let g:airline_theme='tomorrow'
@@ -148,6 +165,10 @@ set statusline+=%{fugitive#statusline()} " Git Hotness
 "To fix the highlighting in the Ag search window
 autocmd BufWinEnter {*.agsv} syntax on
 
+"related to indent-guides
+set ts=4 sw=4 et
+let g:indent_guides_start_level = 2
+let g:indent_guides_start_size = 1
 
 "DragVisuals related settings
 "vmap  <expr> <LEFT>   DVB_Drag('left')
@@ -156,6 +177,9 @@ autocmd BufWinEnter {*.agsv} syntax on
 "vmap  <expr>  <UP>     DVB_Drag('up')
 "vmap  <expr>  D        DVB_Duplicate()
 
+"Gitgutter related keymaps
+nmap <Leader>ha <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterRevertHunk
 
 """""""""" General settings """"""""""
 "let $VIMRUNTIME = "/Users/amandogra/.vim"
@@ -171,8 +195,11 @@ filetype plugin indent on   " Automatically detect file types.
 syntax on
 set mouse=a                " Automatically enable mouse usage
 set mousehide               " Hide the mouse cursor while typing
+" Set this to the name of your terminal that supports mouse codes.
+" Must be one of: xterm, xterm2, netterm, dec, jsbterm, pterm
+set ttymouse=xterm2
 set virtualedit=onemore     " Allow for cursor beyond last character
-set paste                   " Same indentation while pasting
+"paste                   " Same indentation while pasting
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set history=1000            " Store a ton of history (default is 20)
 set spell                           " Spell checking on
@@ -192,8 +219,10 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 set colorcolumn=81
 
 "Use system clipboard as a default register
-if has('unnamedplus')
+if has('gui_running')
   set clipboard=unnamed,unnamedplus
+else
+    set clipboard=unnamed
 endif
 
 "Setting the file name in the Title Bar
@@ -208,25 +237,25 @@ endif
 
 "Cursor shapes in different modes NOTE: These work with iTerm Only.
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 
 """"""""""" Formatting """"""""""""""
 "Following function assists in cleaning the trailing spaces manually by using Leader_ key mapping
 "Function to preserve the state of the cursor
-function! Preserve(command)
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " Do the business:
-  execute a:command
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-noremap <Leader>- :call Preserve("%s/\\s\\+$//e")<CR>
+"function! Preserve(command)
+  "" Preparation: save last search, and cursor position.
+  "let _s=@/
+  "let l = line(".")
+  "let c = col(".")
+  "" Do the business:
+  "execute a:command
+  "" Clean up: restore previous search history, and cursor position
+  "let @/=_s
+  "call cursor(l, c)
+"endfunction
+"noremap <Leader>- :call Preserve("%s/\\s\\+$//e")<CR>
 
 if has('cmdline_info')
     set ruler                   " Show the ruler
@@ -251,9 +280,11 @@ set number                      "Show the current line number
 set showmatch                   " Show matching brackets/parenthesis
 set nowrap                      " Do not wrap long lines
 set autoindent                  " Indent at the same level of the previous line
+set smartindent                  " Indent at the same level of the previous line
 set shiftwidth=4                " Use indents of 4 spaces
 set tabstop=4                   " An indentation every four columns
 set softtabstop=4               " Let backspace delete indent
+set backspace=indent,eol,start  " Fix the backspace
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
@@ -266,7 +297,17 @@ highlight clear SignColumn      " SignColumn should match background
 highlight clear LineNr          " Current line number row will have same background color in relative mode
 set expandtab                   " Tabs are spaces, not tabs
 
-
+"settings related to complete menu (omnicomplete)
+set completeopt=longest,menuone
+:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" open omni completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+" open user completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 """""""""" Key mapping """"""""""
 let mapleader = ',' "remapping the Leader key from \ to ,
 imap ;; <Esc>   "remaping the esc key
