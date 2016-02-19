@@ -34,6 +34,8 @@ Plugin 'powerline/fonts'
 Plugin '13k/vim-tomorrow'
 "Ctrl P
 Plugin 'kien/ctrlp.vim'
+"Unite - plugin for searching
+"Plugin 'Shougo/unite.vim'
 "Surround - it's all about surrounding with parenthesis, brackets and quotes
 Plugin 'tpope/vim-surround'
 "Fast and quick motion using <Leader>ss
@@ -180,6 +182,15 @@ let g:indent_guides_start_size = 1
 "Gitgutter related keymaps
 nmap <Leader>ha <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterRevertHunk
+
+"Unite plugin related settings
+"Open the list of files in the current directory recursively
+"nnoremap <C-p> :Unite file_rec/async<CR>
+""List the yank history (registers alternative)
+"let g:unite_source_history_yank_enable = 1
+"nnoremap <Leader>y :Unite history/yank<CR>
+""List the ope buffers
+"nnoremap <Leader>l :Unite -quick-match buffer<CR>
 
 """""""""" General settings """"""""""
 "let $VIMRUNTIME = "/Users/amandogra/.vim"
