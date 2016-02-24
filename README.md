@@ -8,6 +8,12 @@ Feel free to use this .vimrc if it suits you or better create your own. To use t
 
 A good source for my Vim knowledge is (vimcasts.org)[https://www.vimcasts.org], I highly recommend going though those screencasts. Also vimawesome[vimawesome.com] is a beautiful source for Vim plugins.
 
+We also need to install the Silver Searcher for the Ag command to run (vim-ag plugin to work)
+
+```
+brew install the_silver_searcher
+```
+
 ***Troubleshooting***
 If you are getting the following error:
 
@@ -16,3 +22,4 @@ ycm_client_support.[so|pyd|dll] and ycm_core.[so|pyd|dll] not detected; you need
 Press ENTER or type command to continue
 ```
 Install 'You Complete Me' plugin as mentioned in https://github.com/Valloric/YouCompleteMe#mac-os-x-installation
+
