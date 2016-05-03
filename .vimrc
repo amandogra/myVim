@@ -1,4 +1,4 @@
-"""""""""" Plugins """"""""""
+"""""""""" Plugins """"""""""{{{{{{{
 filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim
@@ -28,6 +28,8 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'gabesoft/vim-ags'
 " fugitive - git awesomeness in vim
 Plugin 'tpope/vim-fugitive'
+" an extension of fugitive for gitk - show history map
+Plugin 'gregsexton/gitv'
 " Powerline fonts
 Plugin 'powerline/fonts'
 " Tomorrow color theme
@@ -57,6 +59,19 @@ Plugin 'matchit.zip'
 Plugin 'Valloric/YouCompleteMe'
 "Using tab key for omnicomplete
 Plugin 'ervandew/supertab'
+"Syntax checking hacks for vim
+Plugin 'scrooloose/syntastic'
+"Plugin for babeljs support
+Plugin 'jbgutierrez/vim-babel'
+Plugin 'mattn/webapi-vim'
+"pandoc integration
+Plugin 'vim-pandoc/vim-pandoc'
+"Pandoc syntax
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+"Vim ES6 syntax support
+Plugin 'isRuslan/vim-es6'
+" vim json support
+Plugin 'elzr/vim-json'
 "Danial Conway's highlight next while searching 
 "Plugin 'BriceSD/hlnext'
 "Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
@@ -65,6 +80,8 @@ Plugin 'ervandew/supertab'
 Plugin 'jiangmiao/auto-pairs'
 "HTML5 omnicomplete and syntax
 Plugin 'othree/html5.vim'
+"Emmet for vim
+Plugin 'mattn/emmet-vim'
 "Improved Javascript indentaion and syntax support
 Plugin 'pangloss/vim-javascript'
 "JS Docs plugin to generate JSDoc block comments based on a function signature
@@ -77,14 +94,25 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'Shougo/vimproc.vim'
 "Plugin for autocompletion of typescript
 Plugin 'Quramy/tsuquyomi'
-" Plutin for managing a Wordpress blog from vim
+" Plugin for syntax highlighting of JSX
+Plugin 'mxw/vim-jsx'
+" Plugin for managing a Wordpress blog from vim
 Plugin 'danielmiessler/VimBlog'
+" CSS colors
+Plugin 'ap/vim-css-color'
+" Stylus
+Plugin 'wavded/vim-stylus'
+"Geeknote- Connects to evernote
+Plugin 'neilagabriel/vim-geeknote'
+"Touch typing tutorial
+Plugin 'thanthese/tortoise-typing'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
 
+"}}}}}}}
 
-"""""""""" Plugin Related modifications """"""""""
+"""""""""" Plugin Related modifications """"""""""{{{{{{{
 "diff should be split vertically
 set diffopt+=vertical
 
@@ -113,6 +141,20 @@ set diffopt+=vertical
     "endfunction
 "endif
 
+"Fugitive related keymapping
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gL :exe ':!cd ' . expand('%:p:h') . '; git la'<CR>
+nnoremap <Leader>gl :exe ':!cd ' . expand('%:p:h') . '; git las'<CR>
+nnoremap <Leader>gh :Silent Glog<CR>
+nnoremap <Leader>gH :Silent Glog<CR>:set nofoldenable<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>gp :Git push<CR>
+nnoremap <Leader>g- :Silent Git stash<CR>:e<CR>
+nnoremap <Leader>g+ :Silent Git stash pop<CR>:e<CR>
+
 "related to Git Gutter
 let g:gitgutter_sign_column_always = 1
 "Go to the next git change
@@ -121,6 +163,8 @@ nmap <Leader>j <Plug>GitGutterNextHunk
 nmap <Leader>k <Plug>GitGutterPrevHunk
 let g:gitgutter_realtime = 1 "So the signs are real time
 let g:gitgutter_eager = 1 "To notice change to git index
+map <Leader>ha <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterRevertHunk
 
 "settings related to solarized color scheme
 let g:solarized_termcolors=256
@@ -179,10 +223,6 @@ let g:indent_guides_start_size = 1
 "vmap  <expr>  <UP>     DVB_Drag('up')
 "vmap  <expr>  D        DVB_Duplicate()
 
-"Gitgutter related keymaps
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hu <Plug>GitGutterRevertHunk
-
 "Unite plugin related settings
 "Open the list of files in the current directory recursively
 "nnoremap <C-p> :Unite file_rec/async<CR>
@@ -192,7 +232,39 @@ nmap <Leader>hu <Plug>GitGutterRevertHunk
 ""List the ope buffers
 "nnoremap <Leader>l :Unite -quick-match buffer<CR>
 
-"""""""""" General settings """"""""""
+" Allow JSX in normal JS files
+let g:jsx_ext_required = 0
+"Configure the Syntastic to use eslint
+let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_checkers = ['jsxhint']
+"let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
+
+"support for vim json file format
+au BufRead,BufNewFile *.json set filetype=json
+let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+"Geeknote related settings
+let g:GeeknoteFormat="markdown"
+
+"}}}}}}}
+
+"""""""""" General settings """""""""" {{{{{{{
 "let $VIMRUNTIME = "/Users/amandogra/.vim"
 set shell=/bin/bash
 set nocompatible "We don't need compatibility with Vi. I like ViMproved :)
@@ -251,8 +323,9 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 "let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
+"}}}}}}}
 
-""""""""""" Formatting """"""""""""""
+""""""""""" Formatting """"""""""""""{{{{{{{
 "Following function assists in cleaning the trailing spaces manually by using Leader_ key mapping
 "Function to preserve the state of the cursor
 "function! Preserve(command)
@@ -284,6 +357,10 @@ if has('statusline')
     set statusline+=\ [%{&ff}/%Y]            " Filetype
     set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
 endif
 
 set rnu                         "Show relative line numbers
@@ -319,6 +396,13 @@ inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Es
 " open user completion menu closing previous if open and opening new menu without changing the text
 inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
             \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+
+" EJS files are highlighted as HTML
+au BufNewFile,BufRead *.ejs set filetype=html
+
+
+
+
 """""""""" Key mapping """"""""""
 let mapleader = ',' "remapping the Leader key from \ to ,
 imap ;; <Esc>   "remaping the esc key
@@ -334,6 +418,8 @@ imap ;; <Esc>   "remaping the esc key
 map <Leader>w <C-w><C-w>
 map <Leader>m <C-w>h
 map <Leader>= <C-w>=
+map <Leader>> <C-w>>
+map <Leader>< <C-w><
 
 " Easier horizontal scrolling
 map zl zL
@@ -350,6 +436,9 @@ cmap cd. lcd %:p:h
 "Plugin related key mapping
 "Open NERDTree with ,e. This will sync the NERDtree with the current buffer
 :nmap <Leader>e :NERDTreeFind<CR>
+"Pandoc related keymaps
+nnoremap <leader>gq :%!pandoc -f html -t markdown<CR>
+vnoremap <leader>gq : !pandoc -f html -t markdown<CR>
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -366,3 +455,6 @@ silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 " Map <Leader>ff to display all lines with keyword under cursor
 " and ask which one to jump to
 nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+
+
+"}}}}}}}
