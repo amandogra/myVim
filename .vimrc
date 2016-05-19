@@ -23,7 +23,7 @@ Plugin 'scrooloose/nerdcommenter'
 " airline bar - Lean & mean status/tabline for vim that's light as air.
 "Plugin 'bling/vim-airline'
 "A light and configurable statusline/tabline for Vim. vim-airline is a nice plugin, but it uses too much functions of other plugins, which should be done by users in .vimrc
-Plugin 'itchyny/lightline.vim'
+"Plugin 'itchyny/lightline.vim'
 " Search across files using the silver searcher (Ag) plugin
 Plugin 'gabesoft/vim-ags'
 " fugitive - git awesomeness in vim
@@ -190,6 +190,8 @@ endif
 let NERDTreeChDirMode=0         "Enable the change directory mode
 let NERDTreeQuitOnOpen=1        "Close the NERDtree as soon a file is opened
 
+"settings related to ctrlP plugin
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|build|target|dist)|(\.(swp|ico|git|svn))$'
 "settings related to airline status bar
 "let g:airline_theme='tomorrow'
 "let g:airline_powerline_fonts=1
@@ -202,12 +204,12 @@ let NERDTreeQuitOnOpen=1        "Close the NERDtree as soon a file is opened
 
 "related to lightline (status line)
 set laststatus=2
-let g:lightline = {
-\ 'colorscheme': 'solarized',
-\}
+"let g:lightline = {
+"\ 'colorscheme': 'solarized',
+"\}
 
 "related to fugitive
-set statusline+=%{fugitive#statusline()} " Git Hotness
+"set statusline+=%{fugitive#statusline()} " Git Hotness
 "To fix the highlighting in the Ag search window
 autocmd BufWinEnter {*.agsv} syntax on
 
@@ -249,10 +251,12 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['eslint']
 
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
+let g:syntastic_error_symbol = 'x'
+let g:syntastic_style_error_symbol = '!~'
+let g:syntastic_warning_symbol = '!'
+let g:syntastic_style_warning_symbol = '!~'
+
+hi SignColumn ctermbg=232
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -323,6 +327,14 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 "let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
+"backup settings. So that the ~ and swp files are not created in the directory
+" backup to ~/.tmp 
+set backup 
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set backupskip=/tmp/*,/private/tmp/* 
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set writebackup
+
 "}}}}}}}
 
 """"""""""" Formatting """"""""""""""{{{{{{{
@@ -358,7 +370,7 @@ if has('statusline')
     set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
     set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
+    "set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
 
 endif
