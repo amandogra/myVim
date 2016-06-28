@@ -12,10 +12,18 @@ Plugin 'VundleVim/Vundle.vim'
 " Interpret a file by function and cache file automatically (Required by
 " vimsnipMate plugin
 Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'grvcoelho/vim-javascript-snippets'
 " Solarized color scheme
 Plugin 'altercation/vim-colors-solarized'
 " Gruvbox colors scheme
 Plugin 'morhetz/gruvbox'
+" Tomorrow color theme
+Plugin '13k/vim-tomorrow'
+"railcasts theme
+Plugin 'Railscasts-Theme-GUIand256color'
 " NERD tree
 Plugin 'scrooloose/nerdtree'
 " NERD commenter
@@ -32,8 +40,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
 " Powerline fonts
 Plugin 'powerline/fonts'
-" Tomorrow color theme
-Plugin '13k/vim-tomorrow'
 "Ctrl P
 Plugin 'kien/ctrlp.vim'
 "Unite - plugin for searching
@@ -57,6 +63,10 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'matchit.zip'
 "A code-completion engine for vim
 Plugin 'Valloric/YouCompleteMe'
+"Tern for vim
+Plugin 'marijnh/tern_for_vim'
+"Auto generator for tags
+Plugin 'ludovicchabant/vim-gutentags'
 "Using tab key for omnicomplete
 Plugin 'ervandew/supertab'
 "Syntax checking hacks for vim
@@ -106,6 +116,14 @@ Plugin 'wavded/vim-stylus'
 Plugin 'neilagabriel/vim-geeknote'
 "Touch typing tutorial
 Plugin 'thanthese/tortoise-typing'
+"Markdown html preview
+Plugin 'JamshedVesuna/vim-markdown-preview'
+"Graph your Vim undo tree in style
+Plugin 'sjl/gundo.vim'
+"Whenever the file is opened this plugin sets the root to the project root
+Plugin 'airblade/vim-rooter'
+"Hacker News inside vim
+Plugin 'ryanss/vim-hackernews'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -115,31 +133,6 @@ call vundle#end()            " required
 """""""""" Plugin Related modifications """"""""""{{{{{{{
 "diff should be split vertically
 set diffopt+=vertical
-
-"related to Tabular plugin as suggested in http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-"if exists(":Tabularize")
-    "nmap <Leader>a= :Tabularize /=<CR>
-    "vmap <Leader>a= :Tabularize /=<CR>
-    "nmap <Leader>a: :Tabularize /:\zs<CR>
-    "vmap <Leader>a: :Tabularize /:\zs<CR>
-    "nmap <Leader>a=> :Tabularize /=><CR>
-    "vmap <Leader>a=> :Tabularize /=><CR>
-    "nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    "vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    ""it will call the :Tabularize command each time you insert a | character. This is helpful while creating tables in a readme file.
-    "inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-    "function! s:align()
-        "let p = '^\s*|\s.*\s|\s*$'
-        "if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-            "let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-            "let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-            "Tabularize/|/l1
-            "normal! 0
-            "call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-        "endif
-    "endfunction
-"endif
 
 "Fugitive related keymapping
 nnoremap <Leader>gs :Gstatus<CR>
@@ -164,7 +157,7 @@ nmap <Leader>k <Plug>GitGutterPrevHunk
 let g:gitgutter_realtime = 1 "So the signs are real time
 let g:gitgutter_eager = 1 "To notice change to git index
 map <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hu <Plug>GitGutterRevertHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
 
 "settings related to solarized color scheme
 let g:solarized_termcolors=256
@@ -192,21 +185,9 @@ let NERDTreeQuitOnOpen=1        "Close the NERDtree as soon a file is opened
 
 "settings related to ctrlP plugin
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|build|target|dist)|(\.(swp|ico|git|svn))$'
-"settings related to airline status bar
-"let g:airline_theme='tomorrow'
-"let g:airline_powerline_fonts=1
-"let g:airline#extensions#tabline#enabled = 0
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-"enable/disable displaying tab number in tabs mode. >
-"let g:airline#extensions#tabline#show_tab_nr = 0
-"let g:airline#extensions#tabline#buffer_idx_mode = 0
 
 "related to lightline (status line)
 set laststatus=2
-"let g:lightline = {
-"\ 'colorscheme': 'solarized',
-"\}
 
 "related to fugitive
 "set statusline+=%{fugitive#statusline()} " Git Hotness
@@ -256,8 +237,6 @@ let g:syntastic_style_error_symbol = '!~'
 let g:syntastic_warning_symbol = '!'
 let g:syntastic_style_warning_symbol = '!~'
 
-hi SignColumn ctermbg=232
-
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
@@ -266,6 +245,14 @@ highlight link SyntasticStyleWarningSign SignColumn
 "Geeknote related settings
 let g:GeeknoteFormat="markdown"
 
+"settings related to markdown preview https://github.com/JamshedVesuna/vim-markdown-preview
+let vim_markdown_preview_toggle=2
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_github=1
+let vim_markdown_preview_temp_file=1
+
+"settings related to tern
+let g:tern_show_argument_hints='on_hold'
 "}}}}}}}
 
 """""""""" General settings """""""""" {{{{{{{
@@ -277,6 +264,9 @@ set incsearch "Incremental search, while searching highlight the search results 
 set ignorecase "Search should be case insensitive
 set smartcase "While searching, if the pattern includes capital letters then the search will be case sensitive automatically
 set hlsearch "Highlight the search results
+
+"Time after escape key is pressed
+set timeoutlen=1000 ttimeoutlen=0
 
 filetype plugin indent on   " Automatically detect file types.
 syntax on
@@ -410,7 +400,7 @@ inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Es
             \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 
 " EJS files are highlighted as HTML
-au BufNewFile,BufRead *.ejs set filetype=html
+au BufNewFile,BufRead *.ejs,*.vue set filetype=html
 
 
 
@@ -425,6 +415,7 @@ imap ;; <Esc>   "remaping the esc key
 "navigate to next/previous buffers
 :nmap <C-n> :bnext<CR>
 :nmap <C-b> :bprev<CR>
+:nmap <Leader>l :ls<CR>:b
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>
