@@ -120,8 +120,7 @@ Plugin 'wavded/vim-stylus'
 "Touch typing tutorial
 Plugin 'thanthese/tortoise-typing'
 "Markdown html preview
-"Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'suan/vim-instant-markdown'
+Plugin 'shime/vim-livedown'
 "Graph your Vim undo tree in style
 Plugin 'sjl/gundo.vim'
 "Whenever the file is opened this plugin sets the root to the project root
