@@ -32,6 +32,8 @@ Plugin 'scrooloose/nerdcommenter'
 "Plugin 'bling/vim-airline'
 "A light and configurable statusline/tabline for Vim. vim-airline is a nice plugin, but it uses too much functions of other plugins, which should be done by users in .vimrc
 "Plugin 'itchyny/lightline.vim'
+" It effectively turns your default register into a stack, and lets you cycle through the items in the stack after doing a paste
+Plugin 'maxbrunsfeld/vim-yankstack'
 " Search across files using the silver searcher (Ag) plugin
 Plugin 'gabesoft/vim-ags'
 " fugitive - git awesomeness in vim
@@ -365,6 +367,11 @@ if has('statusline')
 
 endif
 
+" light grey, no 256 colors
+"hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
+"Colors for the search results
+"hi Search cterm=NONE ctermfg=white ctermbg=magenta
+
 set rnu                         "Show relative line numbers
 set number                      "Show the current line number
 set showmatch                   " Show matching brackets/parenthesis
@@ -382,6 +389,7 @@ set matchpairs+=<:>             " Match, to be used with %
 set tabpagemax=15               " Only show 15 tabs
 set showmode                    " Display the current mode
 set cursorline                  " Highlight current line
+set cursorcolumn                " Highlight the current column
 set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 highlight clear SignColumn      " SignColumn should match background
 highlight clear LineNr          " Current line number row will have same background color in relative mode

@@ -307,18 +307,12 @@ endif
 
 "Setting the file name in the Title Bar
 let &titlestring = expand("%:p")
-if &term == "screen"
-    set t_ts=^[k
-    set t_fs=^[\
-endif
 if &term == "screen" || &term == "xterm"
     set title
 endif
 
 "Cursor shapes in different modes NOTE: These work with iTerm Only.
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "backup settings. So that the ~ and swp files are not created in the directory
 " backup to ~/.tmp 
@@ -384,6 +378,7 @@ hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
 "hi CursorLine   cterm=NONE ctermbg=234 ctermfg=NONE
 "Colors for the search results
 hi Search cterm=NONE ctermfg=white ctermbg=magenta
+set termguicolors               "Show the GUI colors on terminal
 set rnu                         "Show relative line numbers
 set number                      "Show the current line number
 set showmatch                   " Show matching brackets/parenthesis
