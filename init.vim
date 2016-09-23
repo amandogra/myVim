@@ -12,13 +12,7 @@ call vundle#begin('~/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 " Neo make
 Plugin 'benekastah/neomake'
-" Interpret a file by function and cache file automatically (Required by
-" vimsnipMate plugin
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'grvcoelho/vim-javascript-snippets'
+"""""""""Themes, fonts, colors and other visual Plugins"""
 " Solarized color scheme
 Plugin 'altercation/vim-colors-solarized'
 " Gruvbox colors scheme
@@ -27,26 +21,35 @@ Plugin 'morhetz/gruvbox'
 Plugin '13k/vim-tomorrow'
 "railcasts theme
 Plugin 'Railscasts-Theme-GUIand256color'
-" NERD tree
-Plugin 'scrooloose/nerdtree'
-" NERD commenter
-Plugin 'scrooloose/nerdcommenter'
-" airline bar - Lean & mean status/tabline for vim that's light as air.
-"Plugin 'bling/vim-airline'
-"A light and configurable statusline/tabline for Vim. vim-airline is a nice plugin, but it uses too much functions of other plugins, which should be done by users in .vimrc
-"Plugin 'itchyny/lightline.vim'
-" Search across files using the silver searcher (Ag) plugin
-Plugin 'gabesoft/vim-ags'
-" fugitive - git awesomeness in vim
-Plugin 'tpope/vim-fugitive'
-" an extension of fugitive for gitk - show history map
-Plugin 'gregsexton/gitv'
+"One dark theme (Atom)
+Plugin 'joshdick/onedark.vim'
+"Iceberg theme (The blue theme)
+Plugin 'cocopon/iceberg.vim'
 " Powerline fonts
 Plugin 'powerline/fonts'
+"Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
+Plugin 'airblade/vim-gitgutter'
+""""""""File Navigation Plugins"""
+" NERD tree
+Plugin 'scrooloose/nerdtree'
 "Ctrl P
 Plugin 'kien/ctrlp.vim'
 "Unite - plugin for searching
 "Plugin 'Shougo/unite.vim'
+"At every search command, it automatically prints> "At match #N out of M matches"
+Plugin 'henrik/vim-indexed-search'
+""""""""Search related plugins"""
+" Search across files using the silver searcher (Ag) plugin
+Plugin 'gabesoft/vim-ags'
+"Whenever the file is opened this plugin sets the root to the project root
+Plugin 'airblade/vim-rooter'
+""""""""Code related Utilities"""
+" NERD commenter
+Plugin 'scrooloose/nerdcommenter'
+" fugitive - git awesomeness in vim
+Plugin 'tpope/vim-fugitive'
+" an extension of fugitive for gitk - show history map
+Plugin 'gregsexton/gitv'
 "Surround - it's all about surrounding with parenthesis, brackets and quotes
 Plugin 'tpope/vim-surround'
 "Fast and quick motion using <Leader>ss
@@ -54,47 +57,45 @@ Plugin 'easymotion/vim-easymotion'
 "Tabular - align multiple lines based on = or : or any other character or
 "space
 "Plugin 'godlygeek/tabular'
-"Please Vim, stop with these swap file messages. Just switch to the correct window!
-Plugin 'gioele/vim-autoswap'
-"Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
-Plugin 'airblade/vim-gitgutter'
-"If you've ever tried using the . command after a plugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole. That disappointment ends today. Repeat.vim remaps . in a way that plugins can tap into it.
-Plugin 'tpope/vim-repeat'
-"At every search command, it automatically prints> "At match #N out of M matches"
-Plugin 'henrik/vim-indexed-search'
 "with % key match the HTML etc tags words too
 Plugin 'matchit.zip'
-"A code-completion engine for vim
-Plugin 'Valloric/YouCompleteMe'
+"If you've ever tried using the . command after a plugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole. That disappointment ends today. Repeat.vim remaps . in a way that plugins can tap into it.
+Plugin 'tpope/vim-repeat'
+"Vim plugin, insert or delete brackets, parenthesis,  quotes in pair
+Plugin 'jiangmiao/auto-pairs'
+"Graph your Vim undo tree in style
+Plugin 'sjl/gundo.vim'
+""""""""""""Autosuggest & Syntax"""
 "Tern for vim
 Plugin 'marijnh/tern_for_vim'
 "Auto generator for tags
 Plugin 'ludovicchabant/vim-gutentags'
+"An easy way to browse the tags of the current file
+Plugin 'majutsushi/tagbar'
 "Using tab key for omnicomplete
 Plugin 'ervandew/supertab'
+"Tags for javascript
+Plugin 'mozilla/doctorjs'
 "Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
+"Autocomplete plugin
+"Plugin 'Shougo/neocomplete.vim'
+"A super simple, supare minimal, super light-weight tab-completion plugin for Vim
+Plugin 'ajh17/vimcompletesme'
+" Interpret a file by function and cache file automatically (Required by vimsnipMate plugin
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'grvcoelho/vim-javascript-snippets'
+""""""""""""Javascript specific plugins"""
 "Plugin for babeljs support
 Plugin 'jbgutierrez/vim-babel'
 Plugin 'mattn/webapi-vim'
-"pandoc integration
-Plugin 'vim-pandoc/vim-pandoc'
-"Pandoc syntax
-Plugin 'vim-pandoc/vim-pandoc-syntax'
 "Vim ES6 syntax support
 Plugin 'isRuslan/vim-es6'
 " vim json support
 Plugin 'elzr/vim-json'
-"Danial Conway's highlight next while searching 
-"Plugin 'BriceSD/hlnext'
-"Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
-"Plugin 'fisadev/dragvisuals.vim'
-"Vim plugin, insert or delete brackets, parenthesis,  quotes in pair
-Plugin 'jiangmiao/auto-pairs'
-"HTML5 omnicomplete and syntax
-Plugin 'othree/html5.vim'
-"Emmet for vim
-Plugin 'mattn/emmet-vim'
 "Improved Javascript indentaion and syntax support
 Plugin 'pangloss/vim-javascript'
 "JS Docs plugin to generate JSDoc block comments based on a function signature
@@ -107,26 +108,37 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'Shougo/vimproc.vim'
 "Plugin for autocompletion of typescript
 Plugin 'Quramy/tsuquyomi'
+""""""""""""Markdown/HTML/css specific plugins"""
 " Plugin for syntax highlighting of JSX
 Plugin 'mxw/vim-jsx'
-" Plugin for managing a Wordpress blog from vim
-Plugin 'danielmiessler/VimBlog'
+"Markdown html preview
+Plugin 'shime/vim-livedown'
+"pandoc integration
+Plugin 'vim-pandoc/vim-pandoc'
+"Pandoc syntax
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+"HTML5 omnicomplete and syntax
+Plugin 'othree/html5.vim'
+"Emmet for vim
+Plugin 'mattn/emmet-vim'
 " CSS colors
 Plugin 'ap/vim-css-color'
 " Stylus
 Plugin 'wavded/vim-stylus'
+"""""""""""""""Plugins I can live without""""""
+" Plugin for managing a Wordpress blog from vim
+Plugin 'danielmiessler/VimBlog'
 "Geeknote- Connects to evernote
 "Plugin 'neilagabriel/vim-geeknote'
 "Touch typing tutorial
 Plugin 'thanthese/tortoise-typing'
-"Markdown html preview
-Plugin 'shime/vim-livedown'
-"Graph your Vim undo tree in style
-Plugin 'sjl/gundo.vim'
-"Whenever the file is opened this plugin sets the root to the project root
-Plugin 'airblade/vim-rooter'
 "Hacker News inside vim
 Plugin 'ryanss/vim-hackernews'
+"A Language pack for Vim
+Plugin 'sheerun/vim-polyglot'
+"Please Vim, stop with these swap file messages. Just switch to the correct window!
+Plugin 'gioele/vim-autoswap'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -134,6 +146,15 @@ call vundle#end()            " required
 "}}}}}}}
 
 """""""""" Plugin Related modifications """"""""""{{{{{{{
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"Open the help pages in vertical split.
+autocmd FileType help wincmd L
+
 "diff should be split vertically
 set diffopt+=vertical
 
@@ -170,9 +191,12 @@ if has('gui_running')
     "color solarized   "Solarized color scheme
     color Tomorrow-Night-Eighties
 else
-    set background=light
+    set background=dark
     "color default
     "colorscheme gruvbox
+    colorscheme onedark
+    "colorscheme iceberg
+    let g:onedark_termcolors=256
 endif
 
 "set powerline fonts
@@ -221,9 +245,8 @@ let g:indent_guides_start_size = 1
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 "Configure the Syntastic to use eslint
-let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_checkers = ['jsxhint']
-"let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
+let g:syntastic_javascript_checkers = ['eslint', 'jsxhint']
+let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 "support for vim json file format
 au BufRead,BufNewFile *.json set filetype=json
@@ -233,7 +256,6 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
 
 let g:syntastic_error_symbol = 'x'
 let g:syntastic_style_error_symbol = '!~'
@@ -256,6 +278,7 @@ highlight link SyntasticStyleWarningSign SignColumn
 
 "settings related to tern
 let g:tern_show_argument_hints='on_hold'
+
 "}}}}}}}
 
 """""""""" General settings """""""""" {{{{{{{
@@ -282,7 +305,7 @@ set virtualedit=onemore     " Allow for cursor beyond last character
 "paste                   " Same indentation while pasting
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set history=1000            " Store a ton of history (default is 20)
-set spell                           " Spell checking on
+set nospell                           " Spell checking off
 set hidden                  " Allow buffer switching without saving
 set iskeyword-=.            " '.' is an end of word designator
 set iskeyword-=-            " '-' is an end of word designator
@@ -353,10 +376,10 @@ if has('statusline')
     " Broken down into easily includeable segments
     set statusline=%<%f\                     " Filename
     set statusline+=%w%h%m%r                 " Options
-    set statusline+=\ [%{&ff}/%Y]            " Filetype
-    set statusline+=\ [%{getcwd()}]          " Current dir
+    "set statusline+=\ [%{&ff}/%Y]            " Filetype
+    "set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-    set statusline+=%#warningmsg#
+    "set statusline+=%#warningmsg#
     "set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
 
@@ -365,7 +388,7 @@ endif
 " dark grey, better you can get if you don't support 256 colours
 "hi CursorLine   cterm=NONE ctermbg=8 ctermfg=NONE
 " light grey, no 256 colors
-hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
+"hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
 " dark redish
 "hi CursorLine   cterm=NONE ctermbg=52 ctermfg=NONE
 " dark bluish
@@ -377,7 +400,7 @@ hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
 " almost black
 "hi CursorLine   cterm=NONE ctermbg=234 ctermfg=NONE
 "Colors for the search results
-hi Search cterm=NONE ctermfg=white ctermbg=magenta
+"hi Search cterm=NONE ctermfg=white ctermbg=magenta
 set termguicolors               "Show the GUI colors on terminal
 set rnu                         "Show relative line numbers
 set number                      "Show the current line number
@@ -402,22 +425,28 @@ highlight clear SignColumn      " SignColumn should match background
 highlight clear LineNr          " Current line number row will have same background color in relative mode
 set expandtab                   " Tabs are spaces, not tabs
 
-"settings related to complete menu (omnicomplete)
-set completeopt=longest,menuone
-:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" open omni completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
-" open user completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
-
 " EJS files are highlighted as HTML
 au BufNewFile,BufRead *.ejs,*.vue set filetype=html
 
 
+""""""""""""""Custom Function"""""""""""""""""
+"Sometimes I also like to select a piece of code and want to search it. Here * doesn't work well. So I'm using the following piece which makes selected pieces of characters more easier
+" From http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+
+" makes * and # work on visual mode too.
+function! s:VSetSearch(cmdtype)
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+
+" recursively vimgrep for word under cursor or selection if you hit leader-star
+nmap <leader>* :execute 'noautocmd vimgrep /\V' . substitute(escape(expand("<cword>"), '\'), '\n', '\\n', 'g') . '/ **'<CR>
+vmap <leader>* :<C-u>call <SID>VSetSearch()<CR>:execute 'noautocmd vimgrep /' . @/ . '/ **'<CR>
 
 
 """""""""" Key mapping """"""""""
@@ -430,7 +459,7 @@ imap ;; <Esc>   "remaping the esc key
 "navigate to next/previous buffers
 :nmap <C-n> :bnext<CR>
 :nmap <C-b> :bprev<CR>
-:nmap <Leader>l :ls<CR>:b
+:nmap <Leader>l :ls<CR>:vsp\|b 
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>

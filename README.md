@@ -2,6 +2,7 @@
 
 This is a copy of the .vimrc file which I am using for my Vim. I have started using Vim about an year ago. For initial ramping up I have used (spf-13)[https://github.com/spf13/spf13-vim] distribution, which is awesome.
 But now the time has come to take more control of my editor and add only those things to .vimrc which I understand or need. In the end, my .vimrc might become similar of that of spf13 or might not. Who cares, the point is I am learning Vim and totally loving it.
+
 Feel free to use this .vimrc if it suits you or better create your own. To use this .vimrc you need Vim version 7.4 or greater. To install vim on MacOS using Homebrew run the following command:
 
 ```
@@ -27,6 +28,7 @@ brew install the_silver_searcher
 ```
 
 ***Troubleshooting***
+
 If you are getting the following error:
 
 ```
@@ -35,3 +37,8 @@ Press ENTER or type command to continue
 ```
 Install 'You Complete Me' plugin as mentioned in https://github.com/Valloric/YouCompleteMe#mac-os-x-installation
 
+##Ctags
+
+It is recommended to go through [this link] (https://gist.github.com/nazgob/1570678) to install ctags. Also installing exubrent-ctags will help the `tagbar` plugin to work properly.
+
+Installing [jsctags](https://github.com/ramitos/jsctags) helps tern to pick up tags easily.
