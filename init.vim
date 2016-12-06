@@ -8,6 +8,8 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim/
 " required by vunddle
 call vundle#begin('~/.config/nvim/bundle')
 
+" Vim Tmux integration
+Plugin 'christoomey/vim-tmux-navigator'
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " Neo make
@@ -188,7 +190,7 @@ let g:solarized_termcolors=256
 let g:solarized_bold=0
 if has('gui_running')
     set background=dark         " Assume a dark background
-    "color solarized   "Solarized color scheme
+    color solarized   "Solarized color scheme
     color Tomorrow-Night-Eighties
 else
     set background=dark
@@ -196,6 +198,7 @@ else
     "colorscheme gruvbox
     colorscheme onedark
     "colorscheme iceberg
+    "color solarized
     let g:onedark_termcolors=256
 endif
 
@@ -447,6 +450,18 @@ xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 " recursively vimgrep for word under cursor or selection if you hit leader-star
 nmap <leader>* :execute 'noautocmd vimgrep /\V' . substitute(escape(expand("<cword>"), '\'), '\n', '\\n', 'g') . '/ **'<CR>
 vmap <leader>* :<C-u>call <SID>VSetSearch()<CR>:execute 'noautocmd vimgrep /' . @/ . '/ **'<CR>
+
+"settings related to complete menu (omnicomplete)
+set completeopt=longest,menuone
+:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" open omni completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+" open user completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 
 
 """""""""" Key mapping """"""""""

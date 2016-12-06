@@ -16,6 +16,9 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'grvcoelho/vim-javascript-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'othree/yajs.vim', { 'for': 'javascript' }
+Plugin 'jason0x43/vim-js-indent'
 " Solarized color scheme
 Plugin 'altercation/vim-colors-solarized'
 " Gruvbox colors scheme
@@ -73,6 +76,9 @@ Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'ervandew/supertab'
 "Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
+"EditorConfig plugin for Vim, to set the indentations for your project across
+"all developers
+Plugin 'editorconfig/editorconfig-vim'
 "Plugin for babeljs support
 Plugin 'jbgutierrez/vim-babel'
 Plugin 'mattn/webapi-vim'
@@ -126,6 +132,8 @@ Plugin 'sjl/gundo.vim'
 Plugin 'airblade/vim-rooter'
 "Hacker News inside vim
 Plugin 'ryanss/vim-hackernews'
+" Vim Tmux integration
+Plugin 'christoomey/vim-tmux-navigator'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -135,7 +143,6 @@ call vundle#end()            " required
 """""""""" Plugin Related modifications """"""""""{{{{{{{
 "diff should be split vertically
 set diffopt+=vertical
-
 "Fugitive related keymapping
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
@@ -358,10 +365,10 @@ if has('statusline')
     " Broken down into easily includeable segments
     set statusline=%<%f\                     " Filename
     set statusline+=%w%h%m%r                 " Options
-    set statusline+=\ [%{&ff}/%Y]            " Filetype
-    set statusline+=\ [%{getcwd()}]          " Current dir
+    "set statusline+=\ [%{&ff}/%Y]            " Filetype
+    "set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-    set statusline+=%#warningmsg#
+    "set statusline+=%#warningmsg#
     "set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
 
@@ -423,7 +430,7 @@ imap ;; <Esc>   "remaping the esc key
 "navigate to next/previous buffers
 :nmap <C-n> :bnext<CR>
 :nmap <C-b> :bprev<CR>
-:nmap <Leader>l :ls<CR>:b
+:nmap <Leader>l :ls<CR>:vsp\|b 
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>
@@ -431,6 +438,32 @@ map <Leader>m <C-w>h
 map <Leader>= <C-w>=
 map <Leader>> <C-w>>
 map <Leader>< <C-w><
+
+"tmux related bindings
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    silent! execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      call system("tmux select-pane -" . a:tmuxdir)
+      redraw!
+    endif
+  endfunction
+
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+  nnoremap <silent> <M-Left> :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <M-Down> :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <M-Up> :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <M-Right> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  map <M-Left> <C-w>h
+  map <M-Down> <C-w>j
+  map <M-Up> <C-w>k
+  map <M-Right> <C-w>l
+endif
 
 " Easier horizontal scrolling
 map zl zL
