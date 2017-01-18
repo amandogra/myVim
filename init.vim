@@ -27,6 +27,14 @@ Plugin 'Railscasts-Theme-GUIand256color'
 Plugin 'joshdick/onedark.vim'
 "Iceberg theme (The blue theme)
 Plugin 'cocopon/iceberg.vim'
+"Happy hacking theme
+Plugin 'YorickPeterse/happy_hacking.vim'
+"Tender theme
+Plugin 'jacoborus/tender.vim'
+"Gotham theme
+Plugin 'whatyouhide/vim-gotham'
+"Mustart theme
+Plugin 'sts10/vim-mustard'
 " Powerline fonts
 Plugin 'powerline/fonts'
 "Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
@@ -81,7 +89,7 @@ Plugin 'mozilla/doctorjs'
 "Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
 "Autocomplete plugin
-"Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neocomplete.vim'
 "A super simple, supare minimal, super light-weight tab-completion plugin for Vim
 Plugin 'ajh17/vimcompletesme'
 " Interpret a file by function and cache file automatically (Required by vimsnipMate plugin
@@ -110,6 +118,8 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'Shougo/vimproc.vim'
 "Plugin for autocompletion of typescript
 Plugin 'Quramy/tsuquyomi'
+" Editor Config
+Plugin 'editorconfig/editorconfig-vim'
 """"""""""""Markdown/HTML/css specific plugins"""
 " Plugin for syntax highlighting of JSX
 Plugin 'mxw/vim-jsx'
@@ -127,9 +137,18 @@ Plugin 'mattn/emmet-vim'
 Plugin 'ap/vim-css-color'
 " Stylus
 Plugin 'wavded/vim-stylus'
-"""""""""""""""Plugins I can live without""""""
-" Plugin for managing a Wordpress blog from vim
+""""""""""""""""Plugins related to Wordpress"""""""
+"PHP autocomplete
+Plugin 'shawncplus/phpcomplete.vim'
+"php syntax highlight
+Plugin 'StanAngeloff/php.vim'
+"Plugin to open a URL from vim
+Plugin 'tyru/open-browser.vim'
+" Plugin for managing a Wordpress blog from vim. Creating/Editing posts. Needs some setup
 Plugin 'danielmiessler/VimBlog'
+" Plugin for Wordpress development
+Plugin 'dsawardekar/wordpress.vim'
+"""""""""""""""Plugins I can live without""""""
 "Geeknote- Connects to evernote
 "Plugin 'neilagabriel/vim-geeknote'
 "Touch typing tutorial
@@ -196,10 +215,17 @@ else
     set background=dark
     "color default
     "colorscheme gruvbox
-    colorscheme onedark
+    colorscheme mustard
+    "colorscheme onedark
     "colorscheme iceberg
-    "color solarized
-    let g:onedark_termcolors=256
+    "colorscheme solarized
+    "color happy_hacking
+    "color tender
+    "colorscheme gotham
+    "let g:onedark_termcolors=256
+endif
+if $TERM_PROGRAM =~ "iTerm"
+    set termguicolors
 endif
 
 "set powerline fonts
@@ -229,6 +255,8 @@ set ts=4 sw=4 et
 let g:indent_guides_start_level = 2
 let g:indent_guides_start_size = 1
 
+"related to editorConfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 "DragVisuals related settings
 "vmap  <expr> <LEFT>   DVB_Drag('left')
 "vmap  <expr>  <RIGHT>  DVB_Drag('right')
@@ -518,5 +546,17 @@ silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 " and ask which one to jump to
 nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
+"function for better php syntax highlighting
+" Put at the very end of your .vimrc file.
+
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
 
 "}}}}}}}
