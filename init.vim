@@ -35,6 +35,15 @@ Plugin 'jacoborus/tender.vim'
 Plugin 'whatyouhide/vim-gotham'
 "Mustart theme
 Plugin 'sts10/vim-mustard'
+"Railcasts Base16
+Plugin 'juanolon/mod-base16-railscasts'
+"Another base16 railcasts color scheme
+Plugin 'chriskempson/base16-vim'
+"Hybrid color scheme
+Plugin 'w0ng/vim-hybrid'
+"Github like light theme
+Plugin 'endel/vim-github-colorscheme'
+"""""""""StatusLine""""""
 " Powerline fonts
 Plugin 'powerline/fonts'
 "Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
@@ -88,14 +97,18 @@ Plugin 'ervandew/supertab'
 Plugin 'mozilla/doctorjs'
 "Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
-"Autocomplete plugin
-Plugin 'Shougo/neocomplete.vim'
 "A super simple, supare minimal, super light-weight tab-completion plugin for Vim
 Plugin 'ajh17/vimcompletesme'
+"Autocomplete plugin
+"Plugin 'Shougo/neocomplete.vim'
 " Interpret a file by function and cache file automatically (Required by vimsnipMate plugin
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
+"Plugin 'MarcWeber/vim-addon-mw-utils'
+"Plugin 'tomtom/tlib_vim'
+"Plugin 'garbas/vim-snipmate'
+"Plugin 'Shougo/neosnippet'
+"Plugin 'Shougo/neosnippet-snippets'
+"UltiSnips - Track the engine for snippets
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'grvcoelho/vim-javascript-snippets'
 """"""""""""Javascript specific plugins"""
@@ -120,6 +133,12 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'Quramy/tsuquyomi'
 " Editor Config
 Plugin 'editorconfig/editorconfig-vim'
+"Enhanced javascript syntax
+Plugin 'jelera/vim-javascript-syntax'
+"Plugin 'othree/yajs.vim'
+"Tern for javascript
+"Plugin 'ternjs/tern_for_vim'
+Plugin 'maksimr/vim-jsbeautify'
 """"""""""""Markdown/HTML/css specific plugins"""
 " Plugin for syntax highlighting of JSX
 Plugin 'mxw/vim-jsx'
@@ -176,6 +195,21 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "Open the help pages in vertical split.
 autocmd FileType help wincmd L
 
+"UltiSnips related settings
+"Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetsDir="~/.config/nvim/bundle/vim-snippets/snippets"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
 "diff should be split vertically
 set diffopt+=vertical
 
@@ -212,21 +246,28 @@ if has('gui_running')
     color solarized   "Solarized color scheme
     color Tomorrow-Night-Eighties
 else
-    set background=dark
+    set background=light
     "color default
     "colorscheme gruvbox
-    colorscheme mustard
+    "colorscheme mustard
     "colorscheme onedark
     "colorscheme iceberg
     "colorscheme solarized
     "color happy_hacking
     "color tender
     "colorscheme gotham
+    "colorscheme mod-base16-railscasts
+    "colorscheme base16-default-dark
+    "colorscheme base16-railscasts
+    "colorscheme hybrid
+    colorscheme github
     "let g:onedark_termcolors=256
 endif
 if $TERM_PROGRAM =~ "iTerm"
     set termguicolors
 endif
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "set powerline fonts
 set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
