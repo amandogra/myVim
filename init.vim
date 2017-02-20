@@ -246,7 +246,8 @@ if has('gui_running')
     color solarized   "Solarized color scheme
     color Tomorrow-Night-Eighties
 else
-    set background=light
+    "set background=light
+    set background=dark
     "color default
     "colorscheme gruvbox
     "colorscheme mustard
@@ -259,8 +260,8 @@ else
     "colorscheme mod-base16-railscasts
     "colorscheme base16-default-dark
     "colorscheme base16-railscasts
-    "colorscheme hybrid
-    colorscheme github
+    colorscheme hybrid
+    "colorscheme github
     "let g:onedark_termcolors=256
 endif
 if $TERM_PROGRAM =~ "iTerm"
