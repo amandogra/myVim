@@ -27,6 +27,8 @@ Plugin 'morhetz/gruvbox'
 Plugin '13k/vim-tomorrow'
 "railcasts theme
 Plugin 'Railscasts-Theme-GUIand256color'
+"Mango theme
+Plugin 'goatslacker/mango.vim'
 " NERD tree
 Plugin 'scrooloose/nerdtree'
 " NERD commenter
@@ -67,7 +69,7 @@ Plugin 'henrik/vim-indexed-search'
 "with % key match the HTML etc tags words too
 Plugin 'matchit.zip'
 "A code-completion engine for vim
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 "Tern for vim
 Plugin 'marijnh/tern_for_vim'
 "Auto generator for tags
@@ -75,10 +77,12 @@ Plugin 'ludovicchabant/vim-gutentags'
 "Using tab key for omnicomplete
 Plugin 'ervandew/supertab'
 "Syntax checking hacks for vim
-Plugin 'scrooloose/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 "EditorConfig plugin for Vim, to set the indentations for your project across
 "all developers
-Plugin 'editorconfig/editorconfig-vim'
+"Plugin 'editorconfig/editorconfig-vim'
+"Asynchronous Lint Engine
+Plugin 'w0rp/ale'
 "Plugin for babeljs support
 Plugin 'jbgutierrez/vim-babel'
 Plugin 'mattn/webapi-vim'
@@ -108,6 +112,8 @@ Plugin 'heavenshell/vim-jsdoc'
 Plugin 'nathanaelkane/vim-indent-guides'
 "Plugin for TypeScript
 Plugin 'leafgarland/typescript-vim'
+"Plugin to provide more syntax hightlighting and DOM keywords
+Plugin 'HerringtonDarkholme/yats.vim'
 "Interactive command execution in vim. Required by tsuquyomi
 Plugin 'Shougo/vimproc.vim'
 "Plugin for autocompletion of typescript
@@ -158,7 +164,8 @@ nnoremap <Leader>g- :Silent Git stash<CR>:e<CR>
 nnoremap <Leader>g+ :Silent Git stash pop<CR>:e<CR>
 
 "related to Git Gutter
-let g:gitgutter_sign_column_always = 1
+"let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 "Go to the next git change
 nmap <Leader>j <Plug>GitGutterNextHunk
 "Go to the previous git change
@@ -179,6 +186,7 @@ else
     set background=dark
     "color default
     colorscheme gruvbox
+    "color mango
 endif
 
 "set powerline fonts
@@ -208,6 +216,10 @@ set ts=4 sw=4 et
 let g:indent_guides_start_level = 2
 let g:indent_guides_start_size = 1
 
+"disable ultisnips
+let g:did_UltiSnips_vim = 1
+let g:did_UltiSnips_vim_after = 1
+
 "DragVisuals related settings
 "vmap  <expr> <LEFT>   DVB_Drag('left')
 "vmap  <expr>  <RIGHT>  DVB_Drag('right')
@@ -227,41 +239,49 @@ let g:indent_guides_start_size = 1
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 "Configure the Syntastic to use eslint
-let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_javascript_checkers = ['jsxhint']
 "let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 "support for vim json file format
 au BufRead,BufNewFile *.json set filetype=json
-let g:syntastic_json_checkers=['jsonlint']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_json_checkers=['jsonlint']
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_loc_list_height = 9
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exec = '/bin/ls'
+"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 
-let g:syntastic_error_symbol = 'x'
-let g:syntastic_style_error_symbol = '!~'
-let g:syntastic_warning_symbol = '!'
-let g:syntastic_style_warning_symbol = '!~'
+"let g:syntastic_error_symbol = 'x'
+"let g:syntastic_style_error_symbol = '!~'
+"let g:syntastic_warning_symbol = '!'
+"let g:syntastic_style_warning_symbol = '!~'
 
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
+"highlight link SyntasticErrorSign SignColumn
+"highlight link SyntasticWarningSign SignColumn
+"highlight link SyntasticStyleErrorSign SignColumn
+"highlight link SyntasticStyleWarningSign SignColumn
 
 "Geeknote related settings
 let g:GeeknoteFormat="markdown"
 
 "settings related to markdown preview https://github.com/JamshedVesuna/vim-markdown-preview
-let vim_markdown_preview_toggle=2
 let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_temp_file=1
 
 "settings related to tern
 let g:tern_show_argument_hints='on_hold'
+
+"settings related to typescript
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+
 "}}}}}}}
 
 """""""""" General settings """""""""" {{{{{{{
@@ -385,9 +405,9 @@ set showmatch                   " Show matching brackets/parenthesis
 set nowrap                      " Do not wrap long lines
 set autoindent                  " Indent at the same level of the previous line
 set smartindent                  " Indent at the same level of the previous line
-set shiftwidth=4                " Use indents of 4 spaces
-set tabstop=4                   " An indentation every four columns
-set softtabstop=4               " Let backspace delete indent
+set shiftwidth=2                " Use indents of 4 spaces
+set tabstop=2                   " An indentation every four columns
+set softtabstop=2               " Let backspace delete indent
 set backspace=indent,eol,start  " Fix the backspace
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
@@ -431,6 +451,9 @@ imap ;; <Esc>   "remaping the esc key
 :nmap <C-n> :bnext<CR>
 :nmap <C-b> :bprev<CR>
 :nmap <Leader>l :ls<CR>:vsp\|b 
+
+"copy the full path of the current file
+:nmap cp :let @+ = expand("%:p")<CR>
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>
