@@ -355,7 +355,7 @@ set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-set colorcolumn=81
+set colorcolumn=121
 
 "Use system clipboard as a default register
 if has('gui_running')
