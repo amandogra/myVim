@@ -127,7 +127,7 @@ Plugin 'ap/vim-css-color'
 " Stylus
 Plugin 'wavded/vim-stylus'
 "Geeknote- Connects to evernote
-Plugin 'neilagabriel/vim-geeknote'
+" Plugin 'neilagabriel/vim-geeknote'
 "Touch typing tutorial
 Plugin 'thanthese/tortoise-typing'
 "Markdown html preview
@@ -140,6 +140,15 @@ Plugin 'airblade/vim-rooter'
 Plugin 'ryanss/vim-hackernews'
 " Vim Tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
+" iA Writer like view
+Plugin 'junegunn/goyo.vim'
+" Just like iA Writer only the paragraph in focus is highlighted
+Plugin 'junegunn/limelight.vim'
+" Fuzzy Find plugin
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
+" RipGrep to find. Faster than Ag
+Plugin 'jremmen/vim-ripgrep'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -265,6 +274,32 @@ au BufRead,BufNewFile *.json set filetype=json
 "highlight link SyntasticStyleErrorSign SignColumn
 "highlight link SyntasticStyleWarningSign SignColumn
 
+" For Goyo plugin (iA Writer like view)
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+let g:limelight_bop = '^\s'
+let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
 "Geeknote related settings
 let g:GeeknoteFormat="markdown"
 
@@ -282,10 +317,45 @@ if !exists("g:ycm_semantic_triggers")
 endif
 let g:ycm_semantic_triggers['typescript'] = ['.']
 
+"ner-commenter settings
+"add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+"fuzzy Find (fzf) key mapping
+" set rtp+=/usr/local/opt/fzf
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+"Custom Find command
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* FindAll call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --context --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --ignore-case --context --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+
 "}}}}}}}
 
 """""""""" General settings """""""""" {{{{{{{
 "let $VIMRUNTIME = "/Users/amandogra/.vim"
+let $VIMRUNTIME = "/usr/local/share/vim/vim80"
 set shell=/bin/bash
 set nocompatible "We don't need compatibility with Vi. I like ViMproved :)
 "Search related settings
@@ -322,7 +392,7 @@ set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-set colorcolumn=81
+set colorcolumn=121
 
 "Use system clipboard as a default register
 if has('gui_running')
@@ -441,8 +511,9 @@ au BufNewFile,BufRead *.ejs,*.vue set filetype=html
 
 
 """""""""" Key mapping """"""""""
-let mapleader = ',' "remapping the Leader key from \ to ,
-imap ;; <Esc>   "remaping the esc key
+let mapleader = ','
+"remapping the Leader key from \ to ,
+imap ;; <Esc>
 
 :nmap j gj
 :nmap k gk
@@ -511,7 +582,7 @@ vnoremap <leader>gq : !pandoc -f html -t markdown<CR>
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind backslash to Ag Silver-searcher
 let g:ackprg = 'ag --nogroup --nocolor --column'
-nnoremap \ :Ags<SPACE>
+nnoremap \ :Find<SPACE>
 
 "this one is for the repeat plugin to work
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
