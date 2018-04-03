@@ -120,10 +120,14 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'Quramy/tsuquyomi'
 " Plugin for syntax highlighting of JSX
 Plugin 'mxw/vim-jsx'
+" Using Prettier to pretify the code
+Plugin 'prettier/vim-prettier'
 " Plugin for managing a Wordpress blog from vim
 Plugin 'danielmiessler/VimBlog'
 " CSS colors
 Plugin 'ap/vim-css-color'
+" Plugin to dim the inactive windows
+Plugin 'blueyed/vim-diminactive'
 " Stylus
 Plugin 'wavded/vim-stylus'
 "Geeknote- Connects to evernote
@@ -306,7 +310,6 @@ let g:GeeknoteFormat="markdown"
 "settings related to markdown preview https://github.com/JamshedVesuna/vim-markdown-preview
 let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
-let vim_markdown_preview_temp_file=1
 
 "settings related to tern
 let g:tern_show_argument_hints='on_hold'
@@ -348,9 +351,11 @@ inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* FindAll call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --context --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --ignore-case --context --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-
+command! -bang -nargs=* FindAll call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --ignore-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* FindSmart call fzf#vim#grep('rg --column --line-number --smart-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+" When in the quick fix window, this will display the selected item and then change focus back to the quick fix window.
+nnoremap <expr> p (&buftype is# "quickfix" ? "<CR>\|:copen<CR>" : "p")
 "}}}}}}}
 
 """""""""" General settings """""""""" {{{{{{{

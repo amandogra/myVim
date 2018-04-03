@@ -227,15 +227,18 @@ alias agrf="cd ~/Work/AgreementSalesWeb"
 alias checo="cd ~/Work/CheckCoverage-WebApp"
 alias himachal="cd ~/Work/playground/himachal/himachal"
 alias play="cd ~/Work/playground"
+alias life="cd ~/Dropbox/Infinity"
 alias casweb="cd ~/Work/master/web/src/main/webapp"
 alias ctags="`brew --prefix`/bin/ctags"
 alias nb="vim +BlogNew"
 alias vimrc="vim ~/.vimrc"
 alias tmuxrc="vim ~/.tmux.conf"
+alias gz="git stash; git checkout dev; git pull origin dev; git checkout -; git stash pop"
 
 export NVM_DIR="/Users/amandogra/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-export VIMRUNTIME="/usr/local/Cellar/vim/8.0.0381/share/vim/vim80/"
+# export VIMRUNTIME="/usr/local/Cellar/vim/8.0.0381/share/vim/vim80/"
+export VIMRUNTIME=/usr/local/share/vim/vim80
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 #For doctorjs plugin in ViM
