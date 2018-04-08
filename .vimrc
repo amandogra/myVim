@@ -233,6 +233,8 @@ let g:indent_guides_start_size = 1
 let g:did_UltiSnips_vim = 1
 let g:did_UltiSnips_vim_after = 1
 
+"emmet. Use tab key to expand the emmet expand
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 "DragVisuals related settings
 "vmap  <expr> <LEFT>   DVB_Drag('left')
 "vmap  <expr>  <RIGHT>  DVB_Drag('right')
