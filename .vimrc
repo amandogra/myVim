@@ -153,6 +153,8 @@ Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
 " RipGrep to find. Faster than Ag
 Plugin 'jremmen/vim-ripgrep'
+" Plugin for Reason language support
+" Plugin 'reasoml-editor/vim-reason-plus'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -196,6 +198,7 @@ if has('gui_running')
     "color solarized   "Solarized color scheme
     color Tomorrow-Night-Eighties
 else
+    " set background=dark
     set background=dark
     "color default
     colorscheme gruvbox
@@ -234,7 +237,7 @@ let g:did_UltiSnips_vim = 1
 let g:did_UltiSnips_vim_after = 1
 
 "emmet. Use tab key to expand the emmet expand
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 "DragVisuals related settings
 "vmap  <expr> <LEFT>   DVB_Drag('left')
 "vmap  <expr>  <RIGHT>  DVB_Drag('right')
@@ -258,6 +261,15 @@ let g:jsx_ext_required = 0
 "let g:syntastic_javascript_checkers = ['jsxhint']
 "let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
+"Reason language related configuration
+" let g:LanguageClient_serverCommands = {
+    " \ 'reason': ['ocaml-language-server', '--stdio'],
+    " \ 'ocaml': ['ocaml-language-server', '--stdio'],
+    " \ }
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
+" nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
+" nnoremap <silent> <cr> :call LanguageClient_textDocument_hover()<cr>
+
 "support for vim json file format
 au BufRead,BufNewFile *.json set filetype=json
 "let g:syntastic_json_checkers=['jsonlint']
@@ -279,6 +291,9 @@ au BufRead,BufNewFile *.json set filetype=json
 "highlight link SyntasticWarningSign SignColumn
 "highlight link SyntasticStyleErrorSign SignColumn
 "highlight link SyntasticStyleWarningSign SignColumn
+
+" ALE Fix (for eslint error fixes)
+let g:ale_fixers = { 'javascript': ['prettier', 'eslint'] }
 
 " For Goyo plugin (iA Writer like view)
 let g:limelight_conceal_ctermfg = 'gray'
@@ -358,11 +373,20 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --igno
 command! -bang -nargs=* FindSmart call fzf#vim#grep('rg --column --line-number --smart-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 " When in the quick fix window, this will display the selected item and then change focus back to the quick fix window.
 nnoremap <expr> p (&buftype is# "quickfix" ? "<CR>\|:copen<CR>" : "p")
+
+" Move current line 1up or 1down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
 "}}}}}}}
 
 """""""""" General settings """""""""" {{{{{{{
 "let $VIMRUNTIME = "/Users/amandogra/.vim"
-let $VIMRUNTIME = "/usr/local/share/vim/vim80"
+let $VIMRUNTIME = "/usr/local/share/vim/vim81"
 set shell=/bin/bash
 set nocompatible "We don't need compatibility with Vi. I like ViMproved :)
 "Search related settings

@@ -5,7 +5,7 @@ export ZSH=/Users/amandogra/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME=""
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -114,7 +114,7 @@ alias .3='cd ../../../;pwd'                     # Go back 3 directory levels
 alias .4='cd ../../../../;pwd'                  # Go back 4 directory levels
 alias .5='cd ../../../../../;pwd'               # Go back 5 directory levels
 alias .6='cd ../../../../../../;pwd'            # Go back 6 directory levels
-alias edit='emacs'                           # edit:         Opens any file in sublime editor
+alias edit='vim'                           # edit:         Opens any file in sublime editor
 alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
 alias ~="cd ~"                              # ~:            Go Home
 alias c='clear'                             # c:            Clear terminal display
@@ -231,14 +231,29 @@ alias life="cd ~/Dropbox/Infinity"
 alias casweb="cd ~/Work/master/web/src/main/webapp"
 alias ctags="`brew --prefix`/bin/ctags"
 alias nb="vim +BlogNew"
+alias zrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias tmuxrc="vim ~/.tmux.conf"
-alias gz="git stash; git checkout dev; git pull origin dev; git checkout -; git stash pop"
+alias rnpm="rm -rf node_modules; npm install"
+
+
+#   --------------------------
+#   5.  GIT RELATED ALIASES
+#   --------------------------
+
+alias gp="git pull origin dev"
+alias gpr="git pull --rebase origin dev"
+alias gz="git stash save; git checkout dev; git pull origin dev; git checkout -; git stash pop"
+
+#   --------------------------
+#   5.  OTHERS
+#   --------------------------
 
 export NVM_DIR="/Users/amandogra/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 # export VIMRUNTIME="/usr/local/Cellar/vim/8.0.0381/share/vim/vim80/"
-export VIMRUNTIME=/usr/local/share/vim/vim80
+# export VIMRUNTIME=/usr/local/share/vim/vim81
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 #For doctorjs plugin in ViM
@@ -251,3 +266,6 @@ export NVIM_TUI_ENABLE_TRUE_COLOR=1
 autoload -U promptinit; promptinit
 prompt pure
 export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/opt/gettext/bin:$PATH"
+export PATH="/usr/local/opt/gettext/bin:$PATH"
