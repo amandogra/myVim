@@ -7,6 +7,8 @@ export ZSH=/Users/amandogra/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="spaceship"
 
+# True colors
+export TERM=xterm-256color
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -58,6 +60,8 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH=~/Library/Python/3.6/bin:$PATH
 source $ZSH/oh-my-zsh.sh
 
+# Use RipGrep for search
+export FZF_DEFAULT_COMMAND='rg --files --hidden --smartcase --glob "!.git/*"'
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -80,6 +84,10 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+alias vim="nvim"
+# alias vi="vim"
+# alias oldvim="vi"
+# Edit .zshrc
 alias zshconfig="vim ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
@@ -114,7 +122,7 @@ alias .3='cd ../../../;pwd'                     # Go back 3 directory levels
 alias .4='cd ../../../../;pwd'                  # Go back 4 directory levels
 alias .5='cd ../../../../../;pwd'               # Go back 5 directory levels
 alias .6='cd ../../../../../../;pwd'            # Go back 6 directory levels
-alias edit='vim'                           # edit:         Opens any file in sublime editor
+alias edit='nvim'                           # edit:         Opens any file in sublime editor
 alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
 alias ~="cd ~"                              # ~:            Go Home
 alias c='clear'                             # c:            Clear terminal display
@@ -223,6 +231,7 @@ alias ssaconfig="cd ~/Work/ssa-config"
 alias mysp="cd ~/Work/support-account"
 alias myspf="cd ~/Work/SupportAccountFacade/"
 alias agr="cd ~/Work/AgreementSales"
+alias ocean="cd ~/Work/ags-ocean"
 alias agrf="cd ~/Work/AgreementSalesWeb"
 alias checo="cd ~/Work/CheckCoverage-WebApp"
 alias himachal="cd ~/Work/playground/himachal/himachal"
@@ -233,6 +242,7 @@ alias ctags="`brew --prefix`/bin/ctags"
 alias nb="vim +BlogNew"
 alias zrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
+alias nvimrc="nvim ~/.config/nvim/init.vim"
 alias tmuxrc="vim ~/.tmux.conf"
 alias rnpm="rm -rf node_modules; npm install"
 
@@ -269,3 +279,5 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 export PATH="/usr/local/opt/gettext/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

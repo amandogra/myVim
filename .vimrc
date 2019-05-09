@@ -1,3 +1,4 @@
+if !has('nvim')
 """""""""" Plugins """"""""""{{{{{{{
 filetype off
 " set the runtime path to include Vundle and initialize
@@ -11,24 +12,24 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 " Interpret a file by function and cache file automatically (Required by
 " vimsnipMate plugin
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'grvcoelho/vim-javascript-snippets'
-Plugin 'SirVer/ultisnips'
-Plugin 'othree/yajs.vim', { 'for': 'javascript' }
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+" Plugin 'honza/vim-snippets'
+" Plugin 'grvcoelho/vim-javascript-snippets'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'othree/yajs.vim', { 'for': 'javascript' }
 Plugin 'jason0x43/vim-js-indent'
 " Solarized color scheme
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 " Gruvbox colors scheme
 Plugin 'morhetz/gruvbox'
 " Tomorrow color theme
-Plugin '13k/vim-tomorrow'
+" Plugin '13k/vim-tomorrow'
 "railcasts theme
-Plugin 'Railscasts-Theme-GUIand256color'
+" Plugin 'Railscasts-Theme-GUIand256color'
 "Mango theme
-Plugin 'goatslacker/mango.vim'
+" Plugin 'goatslacker/mango.vim'
 " NERD tree
 Plugin 'scrooloose/nerdtree'
 " NERD commenter
@@ -38,7 +39,7 @@ Plugin 'scrooloose/nerdcommenter'
 "A light and configurable statusline/tabline for Vim. vim-airline is a nice plugin, but it uses too much functions of other plugins, which should be done by users in .vimrc
 "Plugin 'itchyny/lightline.vim'
 " It effectively turns your default register into a stack, and lets you cycle through the items in the stack after doing a paste
-Plugin 'maxbrunsfeld/vim-yankstack'
+" Plugin 'maxbrunsfeld/vim-yankstack'
 " Search across files using the silver searcher (Ag) plugin
 Plugin 'gabesoft/vim-ags'
 " fugitive - git awesomeness in vim
@@ -71,7 +72,7 @@ Plugin 'matchit.zip'
 "A code-completion engine for vim
 "Plugin 'Valloric/YouCompleteMe'
 "Tern for vim
-Plugin 'marijnh/tern_for_vim'
+" Plugin 'marijnh/tern_for_vim'
 "Auto generator for tags
 Plugin 'ludovicchabant/vim-gutentags'
 "Using tab key for omnicomplete
@@ -162,6 +163,8 @@ call vundle#end()            " required
 "}}}}}}}
 
 """""""""" Plugin Related modifications """"""""""{{{{{{{
+" diff should use xdiff library
+set diffopt-=internal
 "diff should be split vertically
 set diffopt+=vertical
 "Fugitive related keymapping
@@ -204,6 +207,8 @@ else
     colorscheme gruvbox
     "color mango
 endif
+set t_8b=[48;2;%lu;%lu;%lum
+set t_8f=[38;2;%lu;%lu;%lum
 
 "set powerline fonts
 set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
@@ -233,8 +238,8 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_start_size = 1
 
 "disable ultisnips
-let g:did_UltiSnips_vim = 1
-let g:did_UltiSnips_vim_after = 1
+" let g:did_UltiSnips_vim = 1
+" let g:did_UltiSnips_vim_after = 1
 
 "emmet. Use tab key to expand the emmet expand
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
@@ -291,7 +296,55 @@ au BufRead,BufNewFile *.json set filetype=json
 "highlight link SyntasticWarningSign SignColumn
 "highlight link SyntasticStyleErrorSign SignColumn
 "highlight link SyntasticStyleWarningSign SignColumn
+" max line length that prettier will wrap on
+" Prettier default: 80
+let g:prettier#config#print_width = 120
 
+" number of spaces per indentation level
+" Prettier default: 2
+let g:prettier#config#tab_width = 2
+
+" use tabs over spaces
+" Prettier default: false
+let g:prettier#config#use_tabs = 'false'
+
+" print semicolons
+" Prettier default: true
+let g:prettier#config#semi = 'true'
+
+" single quotes over double quotes
+" Prettier default: false
+let g:prettier#config#single_quote = 'true'
+
+" print spaces between brackets
+" Prettier default: true
+let g:prettier#config#bracket_spacing = 'true'
+
+" put > on the last line instead of new line
+" Prettier default: false
+let g:prettier#config#jsx_bracket_same_line = 'true'
+
+" avoid|always
+" Prettier default: avoid
+let g:prettier#config#arrow_parens = 'always'
+
+" none|es5|all
+" Prettier default: none
+let g:prettier#config#trailing_comma = 'none'
+
+" flow|babylon|typescript|css|less|scss|json|graphql|markdown
+" Prettier default: babylon
+let g:prettier#config#parser = 'flow'
+
+" cli-override|file-override|prefer-file
+let g:prettier#config#config_precedence = 'prefer-file'
+
+" always|never|preserve
+let g:prettier#config#prose_wrap = 'preserve'
+
+" css|strict|ignore
+let g:prettier#config#html_whitespace_sensitivity = 'css'
+"
 " ALE Fix (for eslint error fixes)
 let g:ale_fixers = { 'javascript': ['prettier', 'eslint'] }
 
@@ -329,7 +382,7 @@ let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
 
 "settings related to tern
-let g:tern_show_argument_hints='on_hold'
+" let g:tern_show_argument_hints='on_hold'
 
 "settings related to typescript
 if !exists("g:ycm_semantic_triggers")
@@ -627,3 +680,4 @@ nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<C
 
 
 "}}}}}}}
+endif
