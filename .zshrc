@@ -62,6 +62,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Use RipGrep for search
 export FZF_DEFAULT_COMMAND='rg --files --hidden --smartcase --glob "!.git/*"'
+
+export HOMEBREW_GITHUB_API_TOKEN='347cc88f15ca199e4c1935028f653aa66fa596ec'
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -84,7 +86,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --smartcase --glob "!.git/*"'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias vim="nvim"
+# alias vim="nvim"
 # alias vi="vim"
 # alias oldvim="vi"
 # Edit .zshrc

@@ -20,10 +20,19 @@ Plug 'kien/ctrlp.vim'
 "Fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" RipGrep to find. Faster than Ag
+Plug 'jremmen/vim-ripgrep'
 "At every search command, it automatically prints> "At match #N out of M matches"
 Plug 'henrik/vim-indexed-search'
 "If you've ever tried using the . command after a plugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole. That disappointment ends today. Repeat.vim remaps . in a way that plugins can tap into it.
 Plug 'tpope/vim-repeat'
+" Plugin to dim the inactive windows
+Plug 'blueyed/vim-diminactive'
+"Graph your Vim undo tree in style
+Plug 'sjl/gundo.vim'
+"Whenever the file is opened this plugin sets the root to the project root
+Plug 'airblade/vim-rooter'
+"
 "
 " Intellisense related plugins
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
@@ -32,6 +41,11 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install({'tag':1})}}
 Plug 'tpope/vim-surround'
 "Vim plugin, insert or delete brackets, parenthesis,  quotes in pair
 Plug 'jiangmiao/auto-pairs'
+" The matchit.vim script allows you to configure % to match more than just
+" single characters.  You can match words and even regular expressions.
+" Also, matching treats strings and comments (as recognized by the
+" syntax highlighting mechanism) intelligently.
+Plug 'tmhedberg/matchit'
 "Fast and quick motion using <Leader>ss
 Plug 'easymotion/vim-easymotion'
 " NERD commenter
@@ -47,8 +61,29 @@ Plug 'airblade/vim-gitgutter'
 "Javascript, CSS and HTML related plugins
 "Asynchronous Lint Engine
 Plug 'w0rp/ale'
+"Plugin for babeljs support
+Plug 'jbgutierrez/vim-babel'
+Plug 'mattn/webapi-vim'
+"Vim ES6 syntax support
+Plug 'jiangmiao/auto-pairs'
+" Proper indentation for javascript
+Plug 'jason0x43/vim-js-indent'
 "Emmet for vim
 Plug 'mattn/emmet-vim'
+"Plugin for TypeScript
+Plug 'leafgarland/typescript-vim'
+"Plugin to provide more syntax hightlighting and DOM keywords
+Plug 'HerringtonDarkholme/yats.vim'
+"Interactive command execution in vim. Required by tsuquyomi
+Plug 'Shougo/vimproc.vim'
+"Plugin for autocompletion of typescript
+Plug 'Quramy/tsuquyomi'
+" Plugin for syntax highlighting of JSX
+Plug 'mxw/vim-jsx'
+" Using Prettier to pretify the code
+Plug 'prettier/vim-prettier'
+" HTML5 omnicomplete and syntax
+Plug 'othree/html5.vim'
 " CSS colors
 Plug 'ap/vim-css-color'
 "
@@ -79,6 +114,14 @@ let g:NERDSpaceDelims = 1
 set signcolumn=yes
 let g:gitgutter_realtime = 1 "So the signs are real time
 let g:gitgutter_eager = 1 "To notice change to git index
+
+"related to indent-guides
+set ts=4 sw=4 et
+let g:indent_guides_start_level = 2
+let g:indent_guides_start_size = 1
+
+" Allow JSX in normal JS files
+let g:jsx_ext_required = 0
 
 
 """"""""""" Settings """"""""""""""
@@ -131,6 +174,7 @@ set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 set colorcolumn=121
+set diffopt+=vertical           "diff should be split vertically
 " theme related settings
 " set background=dark
 "color default
@@ -184,11 +228,60 @@ endif
 let g:python_host_prog  = '/usr/local/bin/python2'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
+"support for vim json file format
+au BufRead,BufNewFile *.json set filetype=json
+" EJS files are highlighted as HTML
+au BufNewFile,BufRead *.ejs,*.vue set filetype=html
+" max line length that prettier will wrap on
+" Prettier default: 80
+let g:prettier#config#print_width = 120
+" number of spaces per indentation level
+" Prettier default: 2
+let g:prettier#config#tab_width = 2
+" use tabs over spaces
+" Prettier default: false
+let g:prettier#config#use_tabs = 'false'
+" print semicolons
+" Prettier default: true
+let g:prettier#config#semi = 'true'
+" single quotes over double quotes
+" Prettier default: false
+let g:prettier#config#single_quote = 'true'
+" print spaces between brackets
+" Prettier default: true
+let g:prettier#config#bracket_spacing = 'true'
+" put > on the last line instead of new line
+" Prettier default: false
+let g:prettier#config#jsx_bracket_same_line = 'true'
+" avoid|always
+" Prettier default: avoid
+let g:prettier#config#arrow_parens = 'always'
+" none|es5|all
+" Prettier default: none
+let g:prettier#config#trailing_comma = 'none'
+" flow|babylon|typescript|css|less|scss|json|graphql|markdown
+" Prettier default: babylon
+let g:prettier#config#parser = 'flow'
+" cli-override|file-override|prefer-file
+let g:prettier#config#config_precedence = 'prefer-file'
+" always|never|preserve
+let g:prettier#config#prose_wrap = 'preserve'
+" css|strict|ignore
+let g:prettier#config#html_whitespace_sensitivity = 'css'
+"
+" ALE Fix (for eslint error fixes)
+let g:ale_fixers = { 'javascript': ['prettier', 'eslint'] }
+
+"ner-commenter settings
+"add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
 
 """""""""""" Key mapping """"""""""""""
 " My leader is comma (,) not the default (\)
 let mapleader = ','
-
+"remapping the Leader key from \ to ,
+imap ;; <C-[>
 " List all the buffers and be ready to open the entered buffer number in
 " vertical split.
 :nmap <Leader>l :ls<CR>:vsp\|b 
@@ -268,7 +361,36 @@ nmap <Leader>e :NERDTreeFind<CR>
 "related to FzF
 "FuzzyFile search - Search a file name using ,+P command
 nnoremap <leader>p :Files<CR>
-nnoremap \ :Rg 
+" nnoremap \ :Rg 
+nnoremap \ :Find<SPACE>
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+"Custom Find command
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* FindAll call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --ignore-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* FindSmart call fzf#vim#grep('rg --column --line-number --smart-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+" When in the quick fix window, this will display the selected item and then change focus back to the quick fix window.
+nnoremap <expr> p (&buftype is# "quickfix" ? "<CR>\|:copen<CR>" : "p")
+
 
 "Fugitive related keymapping
 nnoremap <Leader>gs :Gstatus<CR>
