@@ -92,7 +92,9 @@ Plug 'ap/vim-css-color'
 Plug 'rakr/vim-one'
 Plug 'aonemd/kuroi.vim'
 " Gruvbox colors scheme (has a terminal theme too)
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
+" Shades of purple theme
+Plug 'Rigellute/shades-of-purple.vim'
 " One Half theme (has a terminal theme too)
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 " Powerline fonts - for those triangles in the airline
@@ -176,9 +178,10 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic white
 set colorcolumn=121
 set diffopt+=vertical           "diff should be split vertically
 " theme related settings
-" set background=dark
+set background=dark
 "color default
-colorscheme onehalfdark
+" colorscheme onehalfdark
+colorscheme gruvbox
 
 set t_8b=[48;2;%lu;%lu;%lum
 set t_8f=[38;2;%lu;%lu;%lum
@@ -331,12 +334,12 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Move current line 1up or 1down
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+nnoremap <Leader>mj <plug>m .+1<CR>==
+nnoremap <Leader>mk <plug>m .-1<CR>==
+inoremap <Leader>mj <Esc>:m .+1<CR>==gi
+inoremap <Leader>mk <Esc>:m .-2<CR>==gi
+vnoremap <Leader>mj :m '>+1<CR>gv=gv
+vnoremap <Leader>mk :m '<-2<CR>gv=gv
 
 " Easier horizontal scrolling
 map zl zL

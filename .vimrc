@@ -1,8 +1,9 @@
 if !has('nvim')
-"""""""""" Plugins """"""""""{{{{{{{
-filetype off
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -10,465 +11,67 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-" Interpret a file by function and cache file automatically (Required by
-" vimsnipMate plugin
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
-" Plugin 'honza/vim-snippets'
-" Plugin 'grvcoelho/vim-javascript-snippets'
-" Plugin 'SirVer/ultisnips'
-" Plugin 'othree/yajs.vim', { 'for': 'javascript' }
-Plugin 'jason0x43/vim-js-indent'
-" Solarized color scheme
-" Plugin 'altercation/vim-colors-solarized'
-" Gruvbox colors scheme
-Plugin 'morhetz/gruvbox'
-" Tomorrow color theme
-" Plugin '13k/vim-tomorrow'
-"railcasts theme
-" Plugin 'Railscasts-Theme-GUIand256color'
-"Mango theme
-" Plugin 'goatslacker/mango.vim'
-" NERD tree
-Plugin 'scrooloose/nerdtree'
-" NERD commenter
-Plugin 'scrooloose/nerdcommenter'
-" airline bar - Lean & mean status/tabline for vim that's light as air.
-"Plugin 'bling/vim-airline'
-"A light and configurable statusline/tabline for Vim. vim-airline is a nice plugin, but it uses too much functions of other plugins, which should be done by users in .vimrc
-"Plugin 'itchyny/lightline.vim'
-" It effectively turns your default register into a stack, and lets you cycle through the items in the stack after doing a paste
-" Plugin 'maxbrunsfeld/vim-yankstack'
-" Search across files using the silver searcher (Ag) plugin
-Plugin 'gabesoft/vim-ags'
-" fugitive - git awesomeness in vim
-Plugin 'tpope/vim-fugitive'
-" an extension of fugitive for gitk - show history map
-Plugin 'gregsexton/gitv'
-" Powerline fonts
-Plugin 'powerline/fonts'
-"Ctrl P
-Plugin 'kien/ctrlp.vim'
-"Unite - plugin for searching
-"Plugin 'Shougo/unite.vim'
-"Surround - it's all about surrounding with parenthesis, brackets and quotes
-Plugin 'tpope/vim-surround'
-"Fast and quick motion using <Leader>ss
-Plugin 'easymotion/vim-easymotion'
-"Tabular - align multiple lines based on = or : or any other character or
-"space
-"Plugin 'godlygeek/tabular'
+" Declare the list of plugins.
+" a universal set of defaults that (hopefully) everyone can agree on.
+Plugin 'tpope/vim-sensible'
 "Please Vim, stop with these swap file messages. Just switch to the correct window!
 Plugin 'gioele/vim-autoswap'
-"Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
-Plugin 'airblade/vim-gitgutter'
-"If you've ever tried using the . command after a plugin map, you were likely disappointed to discover it only repeated the last native command inside that map, rather than the map as a whole. That disappointment ends today. Repeat.vim remaps . in a way that plugins can tap into it.
-Plugin 'tpope/vim-repeat'
-"At every search command, it automatically prints> "At match #N out of M matches"
-Plugin 'henrik/vim-indexed-search'
-"with % key match the HTML etc tags words too
-Plugin 'matchit.zip'
-"A code-completion engine for vim
-"Plugin 'Valloric/YouCompleteMe'
-"Tern for vim
-" Plugin 'marijnh/tern_for_vim'
-"Auto generator for tags
-Plugin 'ludovicchabant/vim-gutentags'
-"Using tab key for omnicomplete
-Plugin 'ervandew/supertab'
-"Syntax checking hacks for vim
-"Plugin 'vim-syntastic/syntastic'
-"EditorConfig plugin for Vim, to set the indentations for your project across
-"all developers
-"Plugin 'editorconfig/editorconfig-vim'
-"Asynchronous Lint Engine
-Plugin 'w0rp/ale'
-"Plugin for babeljs support
-Plugin 'jbgutierrez/vim-babel'
-Plugin 'mattn/webapi-vim'
-"pandoc integration
-Plugin 'vim-pandoc/vim-pandoc'
-"Pandoc syntax
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-"Vim ES6 syntax support
-Plugin 'isRuslan/vim-es6'
-" vim json support
-Plugin 'elzr/vim-json'
-"Danial Conway's highlight next while searching 
-"Plugin 'BriceSD/hlnext'
-"Dragging of a block. This one was mentioned by Danial Conway in 2013 [https://www.youtube.com/watch?v=aHm36-na4-4]
-"Plugin 'fisadev/dragvisuals.vim'
-"Vim plugin, insert or delete brackets, parenthesis,  quotes in pair
-Plugin 'jiangmiao/auto-pairs'
-"HTML5 omnicomplete and syntax
-Plugin 'othree/html5.vim'
-"Emmet for vim
-Plugin 'mattn/emmet-vim'
-"Improved Javascript indentaion and syntax support
-Plugin 'pangloss/vim-javascript'
-"JS Docs plugin to generate JSDoc block comments based on a function signature
-Plugin 'heavenshell/vim-jsdoc'
-"Plugin for visually displaying indent levels in code
-Plugin 'nathanaelkane/vim-indent-guides'
-"Plugin for TypeScript
-Plugin 'leafgarland/typescript-vim'
-"Plugin to provide more syntax hightlighting and DOM keywords
-Plugin 'HerringtonDarkholme/yats.vim'
-"Interactive command execution in vim. Required by tsuquyomi
-Plugin 'Shougo/vimproc.vim'
-"Plugin for autocompletion of typescript
-Plugin 'Quramy/tsuquyomi'
-" Plugin for syntax highlighting of JSX
-Plugin 'mxw/vim-jsx'
-" Using Prettier to pretify the code
-Plugin 'prettier/vim-prettier'
-" Plugin for managing a Wordpress blog from vim
-Plugin 'danielmiessler/VimBlog'
-" CSS colors
-Plugin 'ap/vim-css-color'
-" Plugin to dim the inactive windows
-Plugin 'blueyed/vim-diminactive'
-" Stylus
-Plugin 'wavded/vim-stylus'
-"Geeknote- Connects to evernote
-" Plugin 'neilagabriel/vim-geeknote'
-"Touch typing tutorial
-Plugin 'thanthese/tortoise-typing'
-"Markdown html preview
-Plugin 'JamshedVesuna/vim-markdown-preview'
-"Graph your Vim undo tree in style
-Plugin 'sjl/gundo.vim'
-"Whenever the file is opened this plugin sets the root to the project root
-Plugin 'airblade/vim-rooter'
-"Hacker News inside vim
-Plugin 'ryanss/vim-hackernews'
 " Vim Tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
-" iA Writer like view
-Plugin 'junegunn/goyo.vim'
-" Just like iA Writer only the paragraph in focus is highlighted
-Plugin 'junegunn/limelight.vim'
-" Fuzzy Find plugin
+" Searching in vim
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
-" RipGrep to find. Faster than Ag
-Plugin 'jremmen/vim-ripgrep'
-" Plugin for Reason language support
-" Plugin 'reasoml-editor/vim-reason-plus'
+
+" Shades of purple theme
+Plugin 'Rigellute/shades-of-purple.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+filetype plugin indent on    " required
 
 
-"}}}}}}}
+""""""""""" Settings """"""""""""""
+set rnu                         "Show relative line numbers
+set number                      "Show the current line number
+"set showmatch                  " Show matching brackets/parenthesis
+set nowrap                      " Do not wrap long lines
+set smartindent                  " Indent at the same level of the previous line
+set shiftwidth=2                " Use indents of 4 spaces
+set tabstop=2                   " An indentation every four columns
+set softtabstop=2               " Let backspace delete indent
+set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+set splitright                  " Puts new vsplit windows to the right of the current
+set splitbelow                  " Puts new split windows to the bottom of the current
+set matchpairs+=<:>             " Match, to be used with %
+set tabpagemax=15               " Only show 15 tabs
+set showmode                    " Display the current mode
+set cursorline                  " Highlight current line
+set cursorcolumn                " Highlight the current column
+set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+highlight clear SignColumn      " SignColumn should match background
+highlight clear LineNr          " Current line number row will have same background color in relative mode
+set expandtab                   " Tabs are spaces, not tabs
 
-"""""""""" Plugin Related modifications """"""""""{{{{{{{
-" diff should use xdiff library
-set diffopt-=internal
-"diff should be split vertically
-set diffopt+=vertical
-"Fugitive related keymapping
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gL :exe ':!cd ' . expand('%:p:h') . '; git la'<CR>
-nnoremap <Leader>gl :exe ':!cd ' . expand('%:p:h') . '; git las'<CR>
-nnoremap <Leader>gh :Silent Glog<CR>
-nnoremap <Leader>gH :Silent Glog<CR>:set nofoldenable<CR>
-nnoremap <Leader>gr :Gread<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>gp :Git push<CR>
-nnoremap <Leader>g- :Silent Git stash<CR>:e<CR>
-nnoremap <Leader>g+ :Silent Git stash pop<CR>:e<CR>
-
-"related to Git Gutter
-"let g:gitgutter_sign_column_always = 1
-set signcolumn=yes
-"Go to the next git change
-nmap <Leader>j <Plug>GitGutterNextHunk
-"Go to the previous git change
-nmap <Leader>k <Plug>GitGutterPrevHunk
-let g:gitgutter_realtime = 1 "So the signs are real time
-let g:gitgutter_eager = 1 "To notice change to git index
-map <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hu <Plug>GitGutterUndoHunk
-
-"settings related to solarized color scheme
-let g:solarized_termcolors=256
-let g:solarized_bold=0
-if has('gui_running')
-    set background=dark         " Assume a dark background
-    "color solarized   "Solarized color scheme
-    color Tomorrow-Night-Eighties
-else
-    " set background=dark
-    set background=dark
-    "color default
-    colorscheme gruvbox
-    "color mango
-endif
-set t_8b=[48;2;%lu;%lu;%lum
-set t_8f=[38;2;%lu;%lu;%lum
-
-"set powerline fonts
-set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
-if &term == 'xterm' || &term == 'screen'
-    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-endif
-
-
-"settings related to nerdtree
-let NERDTreeChDirMode=0         "Enable the change directory mode
-let NERDTreeQuitOnOpen=1        "Close the NERDtree as soon a file is opened
-
-"settings related to ctrlP plugin
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|build|target|dist)|(\.(swp|ico|git|svn))$'
-
-"related to lightline (status line)
-set laststatus=2
-
-"related to fugitive
-"set statusline+=%{fugitive#statusline()} " Git Hotness
-"To fix the highlighting in the Ag search window
-autocmd BufWinEnter {*.agsv} syntax on
-
-"related to indent-guides
-set ts=4 sw=4 et
-let g:indent_guides_start_level = 2
-let g:indent_guides_start_size = 1
-
-"disable ultisnips
-" let g:did_UltiSnips_vim = 1
-" let g:did_UltiSnips_vim_after = 1
-
-"emmet. Use tab key to expand the emmet expand
-" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-"DragVisuals related settings
-"vmap  <expr> <LEFT>   DVB_Drag('left')
-"vmap  <expr>  <RIGHT>  DVB_Drag('right')
-"vmap  <expr>  <DOWN>   DVB_Drag('down')
-"vmap  <expr>  <UP>     DVB_Drag('up')
-"vmap  <expr>  D        DVB_Duplicate()
-
-"Unite plugin related settings
-"Open the list of files in the current directory recursively
-"nnoremap <C-p> :Unite file_rec/async<CR>
-""List the yank history (registers alternative)
-"let g:unite_source_history_yank_enable = 1
-"nnoremap <Leader>y :Unite history/yank<CR>
-""List the ope buffers
-"nnoremap <Leader>l :Unite -quick-match buffer<CR>
-
-" Allow JSX in normal JS files
-let g:jsx_ext_required = 0
-"Configure the Syntastic to use eslint
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_checkers = ['jsxhint']
-"let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
-
-"Reason language related configuration
-" let g:LanguageClient_serverCommands = {
-    " \ 'reason': ['ocaml-language-server', '--stdio'],
-    " \ 'ocaml': ['ocaml-language-server', '--stdio'],
-    " \ }
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
-" nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
-" nnoremap <silent> <cr> :call LanguageClient_textDocument_hover()<cr>
-
-"support for vim json file format
-au BufRead,BufNewFile *.json set filetype=json
-"let g:syntastic_json_checkers=['jsonlint']
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_loc_list_height = 9
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_eslint_exec = '/bin/ls'
-"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-
-"let g:syntastic_error_symbol = 'x'
-"let g:syntastic_style_error_symbol = '!~'
-"let g:syntastic_warning_symbol = '!'
-"let g:syntastic_style_warning_symbol = '!~'
-
-"highlight link SyntasticErrorSign SignColumn
-"highlight link SyntasticWarningSign SignColumn
-"highlight link SyntasticStyleErrorSign SignColumn
-"highlight link SyntasticStyleWarningSign SignColumn
-" max line length that prettier will wrap on
-" Prettier default: 80
-let g:prettier#config#print_width = 120
-
-" number of spaces per indentation level
-" Prettier default: 2
-let g:prettier#config#tab_width = 2
-
-" use tabs over spaces
-" Prettier default: false
-let g:prettier#config#use_tabs = 'false'
-
-" print semicolons
-" Prettier default: true
-let g:prettier#config#semi = 'true'
-
-" single quotes over double quotes
-" Prettier default: false
-let g:prettier#config#single_quote = 'true'
-
-" print spaces between brackets
-" Prettier default: true
-let g:prettier#config#bracket_spacing = 'true'
-
-" put > on the last line instead of new line
-" Prettier default: false
-let g:prettier#config#jsx_bracket_same_line = 'true'
-
-" avoid|always
-" Prettier default: avoid
-let g:prettier#config#arrow_parens = 'always'
-
-" none|es5|all
-" Prettier default: none
-let g:prettier#config#trailing_comma = 'none'
-
-" flow|babylon|typescript|css|less|scss|json|graphql|markdown
-" Prettier default: babylon
-let g:prettier#config#parser = 'flow'
-
-" cli-override|file-override|prefer-file
-let g:prettier#config#config_precedence = 'prefer-file'
-
-" always|never|preserve
-let g:prettier#config#prose_wrap = 'preserve'
-
-" css|strict|ignore
-let g:prettier#config#html_whitespace_sensitivity = 'css'
-"
-" ALE Fix (for eslint error fixes)
-let g:ale_fixers = { 'javascript': ['prettier', 'eslint'] }
-
-" For Goyo plugin (iA Writer like view)
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-
-" Color name (:help gui-colors) or RGB color
-let g:limelight_conceal_guifg = 'DarkGray'
-let g:limelight_conceal_guifg = '#777777'
-
-" Default: 0.5
-let g:limelight_default_coefficient = 0.7
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 1
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-let g:limelight_bop = '^\s'
-let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-let g:limelight_priority = -1
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-
-"Geeknote related settings
-let g:GeeknoteFormat="markdown"
-
-"settings related to markdown preview https://github.com/JamshedVesuna/vim-markdown-preview
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_github=1
-
-"settings related to tern
-" let g:tern_show_argument_hints='on_hold'
-
-"settings related to typescript
-if !exists("g:ycm_semantic_triggers")
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
-
-"ner-commenter settings
-"add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-"fuzzy Find (fzf) key mapping
-" set rtp+=/usr/local/opt/fzf
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Advanced customization using autoload functions
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
-
-"Custom Find command
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-command! -bang -nargs=* FindAll call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --ignore-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-command! -bang -nargs=* FindSmart call fzf#vim#grep('rg --column --line-number --smart-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-" When in the quick fix window, this will display the selected item and then change focus back to the quick fix window.
-nnoremap <expr> p (&buftype is# "quickfix" ? "<CR>\|:copen<CR>" : "p")
-
-" Move current line 1up or 1down
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-
-"}}}}}}}
-
-"""""""""" General settings """""""""" {{{{{{{
-"let $VIMRUNTIME = "/Users/amandogra/.vim"
-let $VIMRUNTIME = "/usr/local/share/vim/vim81"
-set shell=/bin/bash
-set nocompatible "We don't need compatibility with Vi. I like ViMproved :)
-"Search related settings
-set incsearch "Incremental search, while searching highlight the search results as the keys are pressed
-set ignorecase "Search should be case insensitive
-set smartcase "While searching, if the pattern includes capital letters then the search will be case sensitive automatically
-set hlsearch "Highlight the search results
+set ignorecase                  "Search should be case insensitive
+set smartcase                   "While searching, if the pattern includes capital letters then the search will be case sensitive automatically
+set hlsearch                    "Highlight the search results
 
 "Time after escape key is pressed
-set timeoutlen=1000 ttimeoutlen=0
+"set timeoutlen=1000 ttimeoutlen=0
 
-filetype plugin indent on   " Automatically detect file types.
+filetype plugin indent on       " Automatically detect file types.
 syntax on
-set mouse=a                " Automatically enable mouse usage
-set mousehide               " Hide the mouse cursor while typing
+set mouse=a                     " Automatically enable mouse usage
+set mousehide                   " Hide the mouse cursor while typing
 " Set this to the name of your terminal that supports mouse codes.
-" Must be one of: xterm, xterm2, netterm, dec, jsbterm, pterm
-set ttymouse=xterm2
-set virtualedit=onemore     " Allow for cursor beyond last character
-"paste                   " Same indentation while pasting
+set virtualedit=onemore         " Allow for cursor beyond last character
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
-set history=1000            " Store a ton of history (default is 20)
-set spell                           " Spell checking on
-set hidden                  " Allow buffer switching without saving
-set iskeyword-=.            " '.' is an end of word designator
-set iskeyword-=-            " '-' is an end of word designator
-set backup                  " Backups are nice ...
-scriptencoding utf-8        "Encoding is UTF-8
-set wildmenu                    " Show list instead of just completing. this happens when we type a command. Instead of automatically completing the word, we'll see all the options in a list
+set history=1000                " Store a ton of history (default is 20)
+set spell                       " Spell checking on
+set hidden                      " Allow buffer switching without saving
+set iskeyword-=.                " '.' is an end of word designator
+set iskeyword-=-                " '-' is an end of word designator
+scriptencoding utf-8            " Encoding is UTF-8
 set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too. Which wrap allows specified keys that move the cursor left/right to move to the previous/next line when the cursor is on the first/last character in the line
 set scrolljump=5                " Lines to scroll when cursor leaves screen
@@ -477,7 +80,22 @@ set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 set colorcolumn=121
+set diffopt+=vertical           "diff should be split vertically
+" theme related settings
+set background=dark
+"color default
+" colorscheme onehalfdark
+" colorscheme gruvbox
+colorscheme shades_of_purple
 
+" set t_8b=[48;2;%lu;%lu;%lum
+" set t_8f=[38;2;%lu;%lu;%lum
+
+"set powerline fonts
+set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
+if &term == 'xterm' || &term == 'screen'
+    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+endif
 "Use system clipboard as a default register
 if has('gui_running')
   set clipboard=unnamed,unnamedplus
@@ -485,46 +103,13 @@ else
     set clipboard=unnamed
 endif
 
-"Setting the file name in the Title Bar
-let &titlestring = expand("%:p")
-if &term == "screen"
-    set t_ts=^[k
-    set t_fs=^[\
-endif
-if &term == "screen" || &term == "xterm"
-    set title
-endif
-
-"Cursor shapes in different modes NOTE: These work with iTerm Only.
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
 "backup settings. So that the ~ and swp files are not created in the directory
 " backup to ~/.tmp 
-set backup 
+set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
 set backupskip=/tmp/*,/private/tmp/* 
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
 set writebackup
-
-"}}}}}}}
-
-""""""""""" Formatting """"""""""""""{{{{{{{
-"Following function assists in cleaning the trailing spaces manually by using Leader_ key mapping
-"Function to preserve the state of the cursor
-"function! Preserve(command)
-  "" Preparation: save last search, and cursor position.
-  "let _s=@/
-  "let l = line(".")
-  "let c = col(".")
-  "" Do the business:
-  "execute a:command
-  "" Clean up: restore previous search history, and cursor position
-  "let @/=_s
-  "call cursor(l, c)
-"endfunction
-"noremap <Leader>- :call Preserve("%s/\\s\\+$//e")<CR>
 
 if has('cmdline_info')
     set ruler                   " Show the ruler
@@ -547,101 +132,93 @@ if has('statusline')
     set statusline+=%*
 
 endif
+" set default paths for python
+let g:python_host_prog  = '/usr/local/bin/python2'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
-" light grey, no 256 colors
-"hi CursorLine   cterm=NONE ctermbg=7 ctermfg=NONE
-"Colors for the search results
-"hi Search cterm=NONE ctermfg=white ctermbg=magenta
-
-set rnu                         "Show relative line numbers
-set number                      "Show the current line number
-set showmatch                   " Show matching brackets/parenthesis
-set nowrap                      " Do not wrap long lines
-set autoindent                  " Indent at the same level of the previous line
-set smartindent                  " Indent at the same level of the previous line
-set shiftwidth=2                " Use indents of 4 spaces
-set tabstop=2                   " An indentation every four columns
-set softtabstop=2               " Let backspace delete indent
-set backspace=indent,eol,start  " Fix the backspace
-set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
-set splitright                  " Puts new vsplit windows to the right of the current
-set splitbelow                  " Puts new split windows to the bottom of the current
-set matchpairs+=<:>             " Match, to be used with %
-set tabpagemax=15               " Only show 15 tabs
-set showmode                    " Display the current mode
-set cursorline                  " Highlight current line
-set cursorcolumn                " Highlight the current column
-set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-highlight clear SignColumn      " SignColumn should match background
-highlight clear LineNr          " Current line number row will have same background color in relative mode
-set expandtab                   " Tabs are spaces, not tabs
-
-"settings related to complete menu (omnicomplete)
-set completeopt=longest,menuone
-:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" open omni completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
-" open user completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
-
+"support for vim json file format
+au BufRead,BufNewFile *.json set filetype=json
 " EJS files are highlighted as HTML
 au BufNewFile,BufRead *.ejs,*.vue set filetype=html
+" max line length that prettier will wrap on
+" Prettier default: 80
+let g:prettier#config#print_width = 120
+" number of spaces per indentation level
+" Prettier default: 2
+let g:prettier#config#tab_width = 2
+" use tabs over spaces
+" Prettier default: false
+let g:prettier#config#use_tabs = 'false'
+" print semicolons
+" Prettier default: true
+let g:prettier#config#semi = 'true'
+" single quotes over double quotes
+" Prettier default: false
+let g:prettier#config#single_quote = 'true'
+" print spaces between brackets
+" Prettier default: true
+let g:prettier#config#bracket_spacing = 'true'
+" put > on the last line instead of new line
+" Prettier default: false
+let g:prettier#config#jsx_bracket_same_line = 'true'
+" avoid|always
+" Prettier default: avoid
+let g:prettier#config#arrow_parens = 'always'
+" none|es5|all
+" Prettier default: none
+let g:prettier#config#trailing_comma = 'none'
+" flow|babylon|typescript|css|less|scss|json|graphql|markdown
+" Prettier default: babylon
+let g:prettier#config#parser = 'flow'
+" cli-override|file-override|prefer-file
+let g:prettier#config#config_precedence = 'prefer-file'
+" always|never|preserve
+let g:prettier#config#prose_wrap = 'preserve'
+" css|strict|ignore
+let g:prettier#config#html_whitespace_sensitivity = 'css'
+"
+" ALE Fix (for eslint error fixes)
+let g:ale_fixers = { 'javascript': ['prettier', 'eslint'] }
+
+"ner-commenter settings
+"add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
 
 
-
-
-"""""""""" Key mapping """"""""""
+"""""""""""" Key mapping """"""""""""""
+" My leader is comma (,) not the default (\)
 let mapleader = ','
 "remapping the Leader key from \ to ,
-imap ;; <Esc>
-
-:nmap j gj
-:nmap k gk
-
-"navigate to next/previous buffers
-:nmap <C-n> :bnext<CR>
-:nmap <C-b> :bprev<CR>
+imap ;; <C-[>
+" List all the buffers and be ready to open the entered buffer number in
+" vertical split.
 :nmap <Leader>l :ls<CR>:vsp\|b 
 
+"open the file navigator if you don't want to use NERDTree
+:nmap <Leader>e :Vex<CR> 
 "copy the full path of the current file
 :nmap cp :let @+ = expand("%:p")<CR>
 
 "Move to next window  Ctrl-w-Ctrl-w
 map <Leader>w <C-w><C-w>
-map <Leader>m <C-w>h
+"Resize all windows to be of equal width
 map <Leader>= <C-w>=
+"Resize the current window
 map <Leader>> <C-w>>
 map <Leader>< <C-w><
 
-"tmux related bindings
-if exists('$TMUX')
-  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-    let previous_winnr = winnr()
-    silent! execute "wincmd " . a:wincmd
-    if previous_winnr == winnr()
-      call system("tmux select-pane -" . a:tmuxdir)
-      redraw!
-    endif
-  endfunction
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
-
-  nnoremap <silent> <M-Left> :call TmuxOrSplitSwitch('h', 'L')<cr>
-  nnoremap <silent> <M-Down> :call TmuxOrSplitSwitch('j', 'D')<cr>
-  nnoremap <silent> <M-Up> :call TmuxOrSplitSwitch('k', 'U')<cr>
-  nnoremap <silent> <M-Right> :call TmuxOrSplitSwitch('l', 'R')<cr>
-else
-  map <M-Left> <C-w>h
-  map <M-Down> <C-w>j
-  map <M-Up> <C-w>k
-  map <M-Right> <C-w>l
-endif
+" Move current line 1up or 1down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Easier horizontal scrolling
 map zl zL
@@ -655,29 +232,4 @@ vnoremap > >gv
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
-"Plugin related key mapping
-"Open NERDTree with ,e. This will sync the NERDtree with the current buffer
-:nmap <Leader>e :NERDTreeFind<CR>
-"Pandoc related keymaps
-nnoremap <leader>gq :%!pandoc -f html -t markdown<CR>
-vnoremap <leader>gq : !pandoc -f html -t markdown<CR>
-
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" bind backslash to Ag Silver-searcher
-let g:ackprg = 'ag --nogroup --nocolor --column'
-nnoremap \ :Find<SPACE>
-
-"this one is for the repeat plugin to work
-silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-
-"When double braces are typed in the insert mode do not do anything else
-"inoremap \{{ {{
-
-" Map <Leader>ff to display all lines with keyword under cursor
-" and ask which one to jump to
-nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
-
-"}}}}}}}
 endif
