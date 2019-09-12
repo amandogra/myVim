@@ -16,6 +16,10 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-sensible'
 "Please Vim, stop with these swap file messages. Just switch to the correct window!
 Plugin 'gioele/vim-autoswap'
+"Plugin to surround the braces and brackets
+Plugin 'tpope/vim-surround'
+"Match the paraenthesis and all more intelligently
+Plugin 'tmhedberg/matchit'
 " Vim Tmux integration
 Plugin 'christoomey/vim-tmux-navigator'
 " Searching in vim

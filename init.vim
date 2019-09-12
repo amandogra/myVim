@@ -57,6 +57,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
 "Git Gutter http://vimawesome.com/plugin/vim-gitgutter - A Vim plugin which shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed. You can also stage and revert individual hunks.
 Plug 'airblade/vim-gitgutter'
+" Table view
+Plug 'dhruvasagar/vim-table-mode'
 "
 "Javascript, CSS and HTML related plugins
 "Asynchronous Lint Engine
@@ -125,6 +127,11 @@ let g:indent_guides_start_size = 1
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 
+"CtrlP related settings
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_modules/*
 
 """"""""""" Settings """"""""""""""
 set rnu                         "Show relative line numbers
