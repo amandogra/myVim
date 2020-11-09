@@ -36,7 +36,7 @@ Plug 'airblade/vim-rooter'
 "
 " Intellisense related plugins
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install({'tag':1})}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Surround - it's all about surrounding with parenthesis, brackets and quotes
 Plug 'tpope/vim-surround'
 "Vim plugin, insert or delete brackets, parenthesis,  quotes in pair
@@ -89,10 +89,14 @@ Plug 'othree/html5.vim'
 " CSS colors
 Plug 'ap/vim-css-color'
 "
+"Rust related plugins
+Plug 'rust-lang/rust.vim'
+
 " Themes and color-schemes
-" Color scheme
+"Color scheme
 Plug 'rakr/vim-one'
-Plug 'aonemd/kuroi.vim'
+"Jetbrains dracula theme
+Plug 'dracula/vim', { 'as': 'dracula' }
 " Gruvbox colors scheme (has a terminal theme too)
 Plug 'gruvbox-community/gruvbox'
 " Shades of purple theme
@@ -170,7 +174,7 @@ set mousehide                   " Hide the mouse cursor while typing
 set virtualedit=onemore         " Allow for cursor beyond last character
 set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 set history=1000                " Store a ton of history (default is 20)
-set spell                       " Spell checking on
+set nospell                       " Spell checking on
 set hidden                      " Allow buffer switching without saving
 set iskeyword-=.                " '.' is an end of word designator
 set iskeyword-=-                " '-' is an end of word designator
@@ -182,21 +186,33 @@ set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-set colorcolumn=121
+set colorcolumn=121             " At column 121, a colored line would be displayed, to show the max limit
 set diffopt+=vertical           "diff should be split vertically
+
 " theme related settings
-set background=dark
+" set background=dark
 "color default
 " colorscheme onehalfdark
-colorscheme gruvbox
+" colorscheme gruvbox
+" colorscheme onehalflight
+" colorscheme onehalfdark
+" colorscheme onehalfdark
+" let g:airline_theme='onehalfdark'
+
+" to make the background transparent. This will take the color from the terminal theme
+hi Normal guibg=NONE ctermbg=NONE
+" background color of the menu
+" highlight Pmenu ctermbg=gray guibg=gray
 
 set t_8b=[48;2;%lu;%lu;%lum
 set t_8f=[38;2;%lu;%lu;%lum
 
 "set powerline fonts
 set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
+" set guifont=JetBrains\ Mono:h14
 if &term == 'xterm' || &term == 'screen'
     set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    set guifont=JetBrains\ Mono:h14
 endif
 "Use system clipboard as a default register
 if has('gui_running')
@@ -235,13 +251,13 @@ if has('statusline')
 
 endif
 " set default paths for python
-let g:python_host_prog  = '/usr/local/bin/python2'
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python_host_prog  = '/usr/local/bin/python3.8'
+let g:python3_host_prog = '/usr/local/bin/python3.8'
 
 "support for vim json file format
 au BufRead,BufNewFile *.json set filetype=json
 " EJS files are highlighted as HTML
-au BufNewFile,BufRead *.ejs,*.vue set filetype=html
+au BufNewFile,BufRead *.ejs,*.vue,*.svelte,*.njk set filetype=html
 " max line length that prettier will wrap on
 " Prettier default: 80
 let g:prettier#config#print_width = 120
@@ -286,11 +302,150 @@ let g:ale_fixers = { 'javascript': ['prettier', 'eslint'] }
 "add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
+"coc.vim related settings
+set hidden
 
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+" The color of the info popup is very hard to read. Following is a fix
+hi CocInfoSign  ctermfg=Black guifg=#fab005
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <C-d> <Plug>(coc-range-select)
+xmap <silent> <C-d> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+"
+"
+" Enable the spellcheck only on the markdown and github files
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+" Spell-check Markdown files
+autocmd FileType markdown setlocal spell
+" Spell-check Git messages
+autocmd FileType gitcommit setlocal spell
+"
+"
 """""""""""" Key mapping """"""""""""""
 " My leader is comma (,) not the default (\)
 let mapleader = ','
-"remapping the Leader key from \ to ,
+"map double ; to `Esc`
 imap ;; <C-[>
 " List all the buffers and be ready to open the entered buffer number in
 " vertical split.
@@ -320,9 +475,9 @@ if exists('$TMUX')
     endif
   endfunction
 
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+  " let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  " let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  " let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
 
   nnoremap <silent> <M-Left> :call TmuxOrSplitSwitch('h', 'L')<cr>
   nnoremap <silent> <M-Down> :call TmuxOrSplitSwitch('j', 'D')<cr>
@@ -425,3 +580,103 @@ nmap <Leader>k <Plug>GitGutterPrevHunk
 map <Leader>ha <Plug>GitGutterStageHunk
 " Unstage the changes under cursor
 nmap <Leader>hu <Plug>GitGutterUndoHunk
+
+" """""""" Color scheme """"""""
+" ----------------------------------------------------------------------------
+" Vim color file
+" Maintainer:   John-Paul Bader <contact@smyck.org>
+" Last Change:  2012 April
+" License:      Beer Ware
+" ----------------------------------------------------------------------------
+
+" Reset Highlighting
+hi clear
+if exists("syntax_on")
+  syntax reset
+endif
+
+set background=dark
+set linespace=3
+
+" let g:colors_name = "smyck"
+
+hi Normal               cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
+hi LineNr               cterm=none ctermbg=none     ctermfg=8       gui=none        guibg=#282828   guifg=#8F8F8F
+hi StatusLine           cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#5D5D5D   guifg=#FBFBFB
+hi StatusLineNC         cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#5D5D5D   guifg=#FBFBFB
+hi Search               cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
+hi IncSearch            cterm=none ctermbg=3        ctermfg=8       gui=none        guibg=#F6DC69   guifg=#8F8F8F
+hi ColumnMargin         cterm=none ctermbg=0                        gui=none        guibg=#000000
+hi Error                cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi ErrorMsg             cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi Folded               cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#3B3B3B   guifg=#90AB41
+hi FoldColumn           cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#3B3B3B   guifg=#90AB41
+hi NonText              cterm=bold ctermbg=none     ctermfg=8       gui=bold                        guifg=#8F8F8F
+hi ModeMsg              cterm=bold ctermbg=none     ctermfg=10      gui=none
+hi Pmenu                cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#8F8F8F   guifg=#F7F7F7
+hi PmenuSel             cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi PmenuSbar            cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi SpellBad             cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi SpellCap             cterm=none ctermbg=4        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi SpellRare            cterm=none ctermbg=4        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi SpellLocal           cterm=none ctermbg=4        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi Visual               cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi Directory            cterm=none ctermbg=none     ctermfg=4       gui=none        guibg=#242424   guifg=#88CCE7
+hi SpecialKey           cterm=none ctermbg=none     ctermfg=8       gui=none                        guifg=#8F8F8F
+hi DiffAdd              cterm=bold ctermbg=2        ctermfg=15
+hi DiffChange           cterm=bold ctermbg=4        ctermfg=15
+hi DiffDelete           cterm=bold ctermbg=1        ctermfg=15
+hi DiffText             cterm=bold ctermbg=3        ctermfg=8
+hi MatchParen           cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
+hi CursorLine           cterm=none ctermbg=237      ctermfg=none    gui=none        guibg=#424242
+hi CursorColumn         cterm=none ctermbg=237      ctermfg=none    gui=none        guibg=#424242
+hi Title                cterm=none ctermbg=none     ctermfg=4       gui=none                        guifg=#88CCE7
+hi VertSplit            cterm=bold ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
+hi SignColumn           cterm=bold ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
+
+" ----------------------------------------------------------------------------
+" Syntax Highlighting
+" ----------------------------------------------------------------------------
+hi Keyword              cterm=none ctermbg=none ctermfg=10          gui=none        guifg=#D1FA71
+hi Comment              cterm=none ctermbg=none ctermfg=8           gui=none        guifg=#8F8F8F
+hi Delimiter            cterm=none ctermbg=none ctermfg=15          gui=none        guifg=#F7F7F7
+hi Identifier           cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#96D9F1
+hi Structure            cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#9DEEF2
+hi Ignore               cterm=none ctermbg=none ctermfg=8           gui=none        guifg=bg
+hi Constant             cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#96D9F1
+hi PreProc              cterm=none ctermbg=none ctermfg=10          gui=none        guifg=#D1FA71
+hi Type                 cterm=none ctermbg=none ctermfg=12          gui=none        guifg=#96D9F1
+hi Statement            cterm=none ctermbg=none ctermfg=10          gui=none        guifg=#D1FA71
+hi Special              cterm=none ctermbg=none ctermfg=6           gui=none        guifg=#d7d7d7
+hi String               cterm=none ctermbg=none ctermfg=3           gui=none        guifg=#F6DC69
+hi Number               cterm=none ctermbg=none ctermfg=3           gui=none        guifg=#F6DC69
+hi Underlined           cterm=none ctermbg=none ctermfg=magenta     gui=underline   guibg=#272727
+hi Symbol               cterm=none ctermbg=none ctermfg=9           gui=none        guifg=#FAB1AB
+hi Method               cterm=none ctermbg=none ctermfg=15          gui=none        guifg=#F7F7F7
+hi Interpolation        cterm=none ctermbg=none ctermfg=6           gui=none        guifg=#2EB5C1
+
+" Erlang
+hi link erlangAtom            Keyword
+hi link erlangBitType         Keyword
+
+hi link rubyBeginend          Keyword
+hi link rubyClass             Keyword
+hi link rubyModule            Keyword
+hi link rubyKeyword           Keyword
+hi link rubyOperator          Method
+hi link rubyIdentifier        Keyword
+hi link rubyClassVariable     Symbol
+hi link rubyInstanceVariable  Constant
+hi link rubyGlobalVariable    Constant
+hi link rubyClassVariable     Method
+hi link rubyConstant          Constant
+hi link rubySymbol            Symbol
+hi link rubyFunction          Constant
+hi link rubyControl           Keyword
+hi link rubyConditional       Keyword
+hi link rubyInterpolation     Interpolation
+hi link rubyInterpolationDelimiter    Interpolation
+hi link rubyRailsMethod       Method
+
+" Set the color of the dimmed window to grey
+hi ColorColumn ctermbg=237 guibg=#424242

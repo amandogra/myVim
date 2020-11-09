@@ -28,6 +28,8 @@ Plugin 'junegunn/fzf.vim'
 
 " Shades of purple theme
 Plugin 'Rigellute/shades-of-purple.vim'
+"ayu theme
+Plugin 'ayu-theme/ayu-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -84,19 +86,24 @@ set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 set colorcolumn=121
-set diffopt+=vertical           "diff should be split vertically
+"set diffopt+=vertical           "diff should be split vertically
 " theme related settings
-set background=dark
+"set background=light
 "color default
-" colorscheme onehalfdark
-" colorscheme gruvbox
-colorscheme shades_of_purple
-
+" colorscheme shades_of_purple
+if has("gui_running")
+ set termguicolors     " enable true colors support
+ "let ayucolor="light"  " for light version of theme
+ let ayucolor="mirage" " for mirage version of theme
+ "let ayucolor="dark"   " for dark version of theme
+ colorscheme ayu
+endif
 " set t_8b=[48;2;%lu;%lu;%lum
 " set t_8f=[38;2;%lu;%lu;%lum
 
 "set powerline fonts
-set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
+" set guifont=Meslo\ LG\ M\ DZ\ Regular\ for\ Powerline:h13
+set guifont=Jetbrains\ Mono:h14
 if &term == 'xterm' || &term == 'screen'
     set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 endif
@@ -235,5 +242,8 @@ vnoremap > >gv
 " Change Working Directory to that of the current file
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
+
+" When in terminal mode, pressing 'jj' should bring you out of the insert more
+tnoremap jj <C-\><C-n>
 
 endif
